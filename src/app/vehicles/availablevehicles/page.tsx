@@ -74,7 +74,10 @@ function Page({}: Props) {
   return (
     <>
       <CreateRideWrapper open={open} onOpenChange={setOpen} />
-      <div className="flex mt-10 mx-2  relative">
+      <div className="flex flex-col mt-10 md:mx-5 mx-2 relative">
+        <div className="text-2xl mb-5 font-semibold opacity-80 text-center sm:hidden flex justify-center">
+          ACTIVE VEHICLES
+        </div>
         <ul className="w-full grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-3 ">
           {vehicles.map((item) => (
             <li key={item.id} className="border p-2 rounded w-full bg-zinc-200">
