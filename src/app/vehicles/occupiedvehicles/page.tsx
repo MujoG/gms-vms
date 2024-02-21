@@ -45,7 +45,7 @@ function Page({}: Props) {
       <div className="flex mt-10 mx-2  relative">
         <ul className="w-full grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-3 ">
           {vehicles.map((item) => (
-            <li className="border p-2 rounded w-full bg-zinc-200">
+            <li key={item.id} className="border p-2 rounded w-full bg-zinc-200">
               <div className="flex w-full justify-between items-center">
                 <div className="text-xl px-4 py-2 font-semibold">
                   {item.vehicle} {item.vehicleYear}
