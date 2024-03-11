@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import DialogWrapper from "@/components/allaround/DialogWrapper";
 import Link from "next/link";
+import CreateServiceWrapper from "@/components/allaround/CreateServiceDialog";
 
 type Props = {};
 
@@ -32,7 +33,9 @@ function Page({}: Props) {
 
   return (
     <div className="mt-10 px-5">
-      <DialogWrapper open={open} onOpenChange={setOpen} />{" "}
+      <DialogWrapper open={open} onOpenChange={setOpen}>
+        <div>mujo</div>
+      </DialogWrapper>{" "}
       <div className="flex flex-col">
         <div className="flex mb-2 border-b border-zinc-300 pb-2">
           <div className="flex items-center uppercase opacity-70 font-semibold text-xl">
@@ -40,7 +43,10 @@ function Page({}: Props) {
             Services:
           </div>
           <div className="w-full  justify-end flex">
-            <Button variant="outline">Add new Service</Button>
+            <CreateServiceWrapper
+              vehicle="test car"
+              registrationPlate="test plate"
+            />
           </div>
         </div>
         <div className="w-full">

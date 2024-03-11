@@ -13,6 +13,7 @@ import { Button } from "../ui/button";
 type Props = {
   open: any;
   onOpenChange: any;
+  children: any;
 };
 
 const item = {
@@ -33,7 +34,7 @@ const item = {
   },
 };
 
-function DialogWrapper({ open, onOpenChange }: Props) {
+function DialogWrapper({ open, onOpenChange, children }: Props) {
   return (
     <div>
       <Dialog open={open} onOpenChange={onOpenChange}>
@@ -49,7 +50,7 @@ function DialogWrapper({ open, onOpenChange }: Props) {
               </span>
             </DialogTitle>
           </DialogHeader>
-          Service Details and more data
+          {children}
         </DialogContent>
       </Dialog>
     </div>
