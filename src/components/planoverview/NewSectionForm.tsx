@@ -15,6 +15,7 @@ type Props = {
   setTempPins: any;
   pinType: any;
   planeId: any;
+  handleRefatch: any;
 };
 
 import {
@@ -67,6 +68,7 @@ function NewSectionForm({
   setTempPins,
   pinType,
   planeId,
+  handleRefatch,
 }: Props) {
   const [detailFromProject, setDetailFromProject] = React.useState(false);
 
@@ -85,7 +87,8 @@ function NewSectionForm({
       onSuccess: (newDetailData) => {
         console.log("Success from mutate createNewDetail:", newDetailData);
         queryClient.invalidateQueries(["getPlaneDetails", planeId]);
-
+        handleRefatch();
+        setOpen(false);
       },
       onError: (error) => {
         console.error("Error from mutate createNewDetail:", error);
@@ -121,22 +124,13 @@ function NewSectionForm({
         newPin,
       });
 
-      // Update the UI or perform any other actions after creating the new detail
-      setPins([...pins, newPin]);
-      setPinId(pinId + 1);
-
-      console.log("mujo", values, pinType);
-
       setTempPin({});
       setTempPins({});
       setOpen(false);
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Handle the error as needed
     }
   }
-
-  console.log("mujsso", planeId);
 
   return (
     <div>

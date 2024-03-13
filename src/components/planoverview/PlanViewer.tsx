@@ -35,9 +35,10 @@ type Props = {
   oldPins: any;
   detailsData: any;
   planeId: any;
+  handleRefatch:any
 };
 
-function PlanViewer({ imageUrl, oldPins, detailsData, planeId }: Props) {
+function PlanViewer({ imageUrl, oldPins, detailsData, planeId,handleRefatch }: Props) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const imageRef = React.useRef<HTMLImageElement>(null);
 
@@ -56,7 +57,7 @@ function PlanViewer({ imageUrl, oldPins, detailsData, planeId }: Props) {
   const [dragStart, setDragStart] = React.useState({ x: 0, y: 0 });
 
   const [pinId, setPinId] = React.useState(10);
-  const [pins, setPins] = React.useState<any>(oldPins);
+  const [pins, setPins] = React.useState<Pin[]>(oldPins);
 
   const [newDetail, setNewDetail] = React.useState(false);
 
@@ -365,6 +366,7 @@ function PlanViewer({ imageUrl, oldPins, detailsData, planeId }: Props) {
         setTempPins={setTempPins}
         pinType={pinType}
         planeId={planeId}
+        handleRefatch={handleRefatch}
       />
       {/* this is for adding or removing pins */}
       <PinTypeSelect pinType={pinType} setPinType={setPinType} />

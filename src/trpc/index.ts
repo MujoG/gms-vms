@@ -9,6 +9,36 @@ export const appRouter = router({
     getAllProjects: publicProcedure.query(()=>{
         return "array"
     }),
+    postZipCode: publicProcedure
+    .input(z.object({ Id: z.string() }))
+    .query(async ({ input }) => {
+    let fetchedData = null;
+
+      console.log('input')
+      console.log(input, 'the input');
+
+      try {
+        const url = `${process.env.DIRECTUS_API_URL}items/Plane/${input.Id}`;
+  
+        const response = await fetch(url, {
+          method: "GET",
+        });
+  
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+  
+        const data = await response.json();
+  
+        console.log("Retrieved data:", data);
+        fetchedData = data;
+        return data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+  
+        return error;
+      }
+    }),
     getProjects: publicProcedure.query(async () => {
         let fetchedData = null;
     
@@ -96,7 +126,7 @@ export const appRouter = router({
       }),
 
 
-      getOnePlane: publicProcedure
+  getOnePlane: publicProcedure
   .input(z.object({
     id: z.string(), // Adjust the schema based on your input requirements
   }))
@@ -159,6 +189,37 @@ export const appRouter = router({
     }
   }),
 
+  getArrayOfPlaneDetails: publicProcedure
+  .input(z.object({ Id: z.string() }))
+  .query(async ({ input }) => {
+  let fetchedData = null;
+
+    console.log('input')
+    console.log(input, 'the input');
+
+    try {
+      const url = `${process.env.DIRECTUS_API_URL}items/Plane/${input.Id}?fields=Details.*`;
+
+      const response = await fetch(url, {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await response.json();
+
+      console.log("Retrieved data:", data);
+      fetchedData = data;
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+
+      return error;
+    }
+  }),
+
   createNewDetail: publicProcedure
   .input(z.object({
     newPin: z.object({
@@ -212,8 +273,6 @@ export const appRouter = router({
       return error;
     }
   }),
-
-    
 })
 
 export type AppRouter = typeof appRouter
