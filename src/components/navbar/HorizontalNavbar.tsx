@@ -62,7 +62,7 @@ function HorizontalNavbar({ showMenu, setShowMenu }: Props) {
   }, [pathname]);
 
   return (
-    <div className="bg-zinc-50 h-[48px] border-b border-zinc-300 sticky w-full flex items-center z-50">
+    <div className="bg-zinc-50 h-[48px] border-b border-zinc-300 sticky w-full flex items-center z-40">
       {/* desktop horizontal navbar */}
 
       <div className="mx-2 w-full hidden sm:flex justify-between ">

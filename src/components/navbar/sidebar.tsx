@@ -11,6 +11,7 @@ import {
   Car,
   ChevronsDown,
   ChevronsUpDown,
+  FolderKanban,
   LineChart,
   LogOut,
 } from "lucide-react";
@@ -29,9 +30,9 @@ const barItems = [
     icon: <LineChart />,
   },
   {
-    label: "vehicles",
-    href: "/vehicles",
-    icon: <Car />,
+    label: "plans",
+    href: "/plans",
+    icon: <FolderKanban />,
     tabs: [
       {
         label: "vehicles",
@@ -47,25 +48,44 @@ const barItems = [
       },
     ],
   },
-  {
-    label: "rides",
-    href: "/rides",
-    icon: <AudioWaveform />,
-    tabs: [
-      {
-        label: "rides",
-        href: "/rides",
-      },
-      {
-        label: "active rides",
-        href: "/rides/activerides",
-      },
-      {
-        label: "past rides",
-        href: "/rides/pastrides",
-      },
-    ],
-  },
+  // {
+  //   label: "vehicles",
+  //   href: "/vehicles",
+  //   icon: <Car />,
+  //   tabs: [
+  //     {
+  //       label: "vehicles",
+  //       href: "/vehicles",
+  //     },
+  //     {
+  //       label: "available vehicles",
+  //       href: "/vehicles/availablevehicles",
+  //     },
+  //     {
+  //       label: "occupied vehicles",
+  //       href: "/vehicles/occupiedvehicles",
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: "rides",
+  //   href: "/rides",
+  //   icon: <AudioWaveform />,
+  //   tabs: [
+  //     {
+  //       label: "rides",
+  //       href: "/rides",
+  //     },
+  //     {
+  //       label: "active rides",
+  //       href: "/rides/activerides",
+  //     },
+  //     {
+  //       label: "past rides",
+  //       href: "/rides/pastrides",
+  //     },
+  //   ],
+  // },
 ];
 
 function Sidebar({ children }: Props) {
