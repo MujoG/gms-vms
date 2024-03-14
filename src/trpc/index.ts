@@ -14,8 +14,8 @@ export const appRouter = router({
     .query(async ({ input }) => {
     let fetchedData = null;
 
-      console.log('input')
-      console.log(input, 'the input');
+      // console.log('input')
+      // console.log(input, 'the input');
 
       try {
         const url = `${process.env.DIRECTUS_API_URL}items/Plane/${input.Id}`;
@@ -30,7 +30,7 @@ export const appRouter = router({
   
         const data = await response.json();
   
-        console.log("Retrieved data:", data);
+        // console.log("Retrieved data:", data);
         fetchedData = data;
         return data;
       } catch (error) {
@@ -133,7 +133,7 @@ export const appRouter = router({
   .mutation(async ({ input }: any) => {
     let fetchedData = null;
 
-    console.log(input, 'the input');
+    // console.log(input, 'the input');
 
     try {
       const url = `${process.env.DIRECTUS_API_URL}items/Plane/${input.id}`;
@@ -148,7 +148,7 @@ export const appRouter = router({
 
       const data = await response.json();
 
-      console.log("Retrieved data:", data);
+      // console.log("Retrieved data:", data);
       fetchedData = data;
       return data;
     } catch (error) {
@@ -179,7 +179,7 @@ export const appRouter = router({
 
       const data = await response.json();
 
-      console.log("Retrieved data:", JSON.stringify(data));
+      // console.log("Retrieved data:", JSON.stringify(data));
       fetchedData = data;
       return data;
     } catch (error) {
@@ -194,8 +194,8 @@ export const appRouter = router({
   .query(async ({ input }) => {
   let fetchedData = null;
 
-    console.log('input')
-    console.log(input, 'the input');
+    // console.log('input')
+    // console.log(input, 'the input');
 
     try {
       const url = `${process.env.DIRECTUS_API_URL}items/Plane/${input.Id}?fields=Details.*`;
@@ -210,7 +210,7 @@ export const appRouter = router({
 
       const data = await response.json();
 
-      console.log("Retrieved data:", data);
+      // console.log("Retrieved data:", data);
       fetchedData = data;
       return data;
     } catch (error) {
@@ -237,7 +237,7 @@ export const appRouter = router({
     const { newPin } = input;
 
 
-    console.log(newPin,'newpin')
+    // console.log(newPin,'newpin')
 
     try {
       const url = `${process.env.DIRECTUS_API_URL}items/Detail`; // Adjust the endpoint based on your API
@@ -273,6 +273,110 @@ export const appRouter = router({
       return error;
     }
   }),
+  deleteSingleDetail: publicProcedure
+  .input(z.object({ Id: z.string() }))
+  .query(async ({ input }) => {
+  let fetchedData = null;
+
+    // console.log(input, 'ID delete detail');
+
+    try {
+      const url = `${process.env.DIRECTUS_API_URL}items/Detail/${input.Id}`;
+
+      const response = await fetch(url, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await response.json();
+
+      // console.log("Retrieved data:", data);
+      fetchedData = data;
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+
+      return error;
+    }
+  }),
+  deleteOneDetail: publicProcedure
+  .input(z.object({
+    newPin: z.object({
+
+      id: z.string(),
+
+    }),
+  }))
+  .mutation(async ({ input }: any) => {
+    const { newPin } = input;
+
+
+    console.log(newPin,'newpin')
+
+    try {
+      const url = `${process.env.DIRECTUS_API_URL}items/Detail`; // Adjust the endpoint based on your API
+
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          // Add any other headers, like authorization if needed
+        },
+        body: JSON.stringify({
+        id: newPin.id
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create new detail");
+      }
+
+      const data = await response.json();
+
+      // console.log("Created new detail:", data);
+      return data;
+    } catch (error) {
+      console.error("Error creating new detail:", error);
+
+      return error;
+    }
+  }),
+  mujoDetail: publicProcedure.input(z.object({
+    id: z.string(),
+  }))
+  .mutation(async ({ input }: any) => {
+    const id = input.id;
+
+
+    console.log(id,'the idddd motherfuckeer')
+
+
+  }),
+  deleteDetail: publicProcedure
+  .input(z.object({ Id: z.string() }))
+  .mutation(async ({ input }) => {
+    try {
+      const url = `${process.env.DIRECTUS_API_URL}items/Detail/${input.Id}`;
+      const response = await fetch(url, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete detail");
+      }
+
+
+      console.log('uspjesno')
+      
+    } catch (error) {
+      console.error("Error deleting detail:", error);
+      return error;
+    }
+  }),
+
 })
 
 export type AppRouter = typeof appRouter

@@ -150,9 +150,7 @@ function PlanViewer({ imageUrl, oldPins, detailsData, planeId,handleRefatch }: P
 
     setTempPosition(newPosition);
 
-    console.log("Mouse Coordinatesss:", {
-      newPosition,
-    });
+
   };
 
   const handleMouseUp = () => {
@@ -311,7 +309,7 @@ function PlanViewer({ imageUrl, oldPins, detailsData, planeId,handleRefatch }: P
     console.log(pinType);
   }, [pinType]);
 
-  console.log("planeid", planeId);
+
   return (
     <div
       className={cn(
@@ -406,6 +404,7 @@ function PlanViewer({ imageUrl, oldPins, detailsData, planeId,handleRefatch }: P
             tempPosition={tempPosition}
             pinType={pinType}
             detailsData={detailsData}
+            handleRefatch={handleRefatch}
           />
         </div>
       </div>

@@ -198,7 +198,7 @@ export function PlaneDataTable() {
                 <HoverCardTrigger>
                   <ScanSearch />
                 </HoverCardTrigger>
-                <HoverCardContent className="bg-zinc-500 w-[500px] aspect-video mr-10 relative">
+                <HoverCardContent className="bg-zinc-500 w-[700px] aspect-video mr-10 relative">
                   {/* {loading && (
                     <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 z-10">
                       <Spinner />

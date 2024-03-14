@@ -7,15 +7,37 @@ import {
 import { Button } from "../ui/button";
 import { Disc } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { trpc } from "@/trpc/client";
 
 type Props = {
   handlePinClick: any;
   pin: any;
   showIcon?: boolean;
   label?: string;
+  handleRefatch?:any
 };
 
-function DetailBox({ handlePinClick, pin, showIcon, label }: Props) {
+function DetailBox({ handlePinClick, pin, showIcon, label,handleRefatch }: Props) {
+  const { mutate: deleteDetailMutation, isLoading } =
+    trpc.deleteDetail.useMutation({
+      onSuccess: () => {
+        console.log("uspjesnooo");
+        handleRefatch()
+      },
+      onError: () => {
+        console.log("error");
+      },
+    });
+
+  const handleDeleteClick = async () => {
+    try {
+      // Assuming 'pin' contains the ID of the detail to be deleted
+      await deleteDetailMutation({ Id: pin.id }); // Trigger the mutation with the pin ID
+    } catch (error) {
+      console.error("Error deleting detail:", error);
+    }
+  };
+
   return (
     <>
       {" "}
@@ -40,6 +62,7 @@ function DetailBox({ handlePinClick, pin, showIcon, label }: Props) {
               <div>{pin.Y}</div>
               <div>{pin.X2}</div>
               <div>{pin.Y2}</div>
+              <div>{pin.id}</div>
               <div>Person who added detail</div>
               <div>detail version:{pin.detailType}</div>
               <div>PIN COORDINATES</div>
@@ -49,9 +72,7 @@ function DetailBox({ handlePinClick, pin, showIcon, label }: Props) {
                   Change Orientation
                 </Button>
               ) : null}
-              <Button onClick={() => handlePinClick(pin.id)}>
-                Delete Detail
-              </Button>
+              <Button onClick={handleDeleteClick}>Delete Detail</Button>
             </div>
           </div>
         </HoverCardContent>

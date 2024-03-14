@@ -10,6 +10,7 @@ type Props = {
   tempPosition?: any;
   pinType: any;
   detailsData: any;
+  handleRefatch: any;
 };
 
 function PinMapper({
@@ -20,6 +21,7 @@ function PinMapper({
   tempPosition,
   pinType,
   detailsData,
+  handleRefatch,
 }: Props) {
   return (
     <div>
@@ -95,6 +97,7 @@ function PinMapper({
                           handlePinClick={handlePinClick}
                           pin={pin}
                           showIcon
+                          handleRefatch={handleRefatch}
                         />
                       </span>
                     </div>
@@ -139,7 +142,11 @@ function PinMapper({
                       transform: `translate(-50%, -50%) `,
                     }}
                   >
-                    <DetailBox handlePinClick={handlePinClick} pin={pin} />
+                    <DetailBox
+                      handlePinClick={handlePinClick}
+                      pin={pin}
+                      handleRefatch={handleRefatch}
+                    />
                   </div>
                   {/* arrow icon and location  */}
                   <div
@@ -192,7 +199,11 @@ function PinMapper({
                       transform: `translate(-50%, -50%) `,
                     }}
                   >
-                    <DetailBox handlePinClick={handlePinClick} pin={pin} />
+                    <DetailBox
+                      handlePinClick={handlePinClick}
+                      pin={pin}
+                      handleRefatch={handleRefatch}
+                    />
                   </div>
                   <div
                     className="absolute h-[20px] w-[20px] flex items-center justify-center"
@@ -246,6 +257,7 @@ function PinMapper({
                         handlePinClick={handlePinClick}
                         pin={pin}
                         label={pin.DetailLabel}
+                        handleRefatch={handleRefatch}
                       />
                     </div>
                   </div>
