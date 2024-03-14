@@ -14,15 +14,21 @@ type Props = {
   pin: any;
   showIcon?: boolean;
   label?: string;
-  handleRefatch?:any
+  handleRefatch?: any;
 };
 
-function DetailBox({ handlePinClick, pin, showIcon, label,handleRefatch }: Props) {
+function DetailBox({
+  handlePinClick,
+  pin,
+  showIcon,
+  label,
+  handleRefatch,
+}: Props) {
   const { mutate: deleteDetailMutation, isLoading } =
     trpc.deleteDetail.useMutation({
       onSuccess: () => {
         console.log("uspjesnooo");
-        handleRefatch()
+        handleRefatch();
       },
       onError: () => {
         console.log("error");
@@ -55,17 +61,16 @@ function DetailBox({ handlePinClick, pin, showIcon, label,handleRefatch }: Props
             ) : null}
           </div>
         </HoverCardTrigger>
-        <HoverCardContent className="bg-zinc-600 w-[250px] aspect-square flex flex-col rounded-lg text-white">
+        <HoverCardContent className="bg-zinc-600 w-[350px] aspect-square flex flex-col rounded-lg text-white">
           <div className="h-full ">
             <div className="flex flex-col justify-between h-full  p-2">
               <div>{pin.X}</div>
               <div>{pin.Y}</div>
               <div>{pin.X2}</div>
               <div>{pin.Y2}</div>
-              <div>{pin.id}</div>
+
               <div>Person who added detail</div>
               <div>detail version:{pin.detailType}</div>
-              <div>PIN COORDINATES</div>
 
               {pin.detailType === "section" ? (
                 <Button onClick={() => handlePinClick(pin.id)}>

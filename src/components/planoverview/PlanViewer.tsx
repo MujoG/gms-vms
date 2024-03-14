@@ -34,10 +34,16 @@ type Props = {
   oldPins: any;
   detailsData: any;
   planeId: any;
-  handleRefatch:any
+  handleRefatch: any;
 };
 
-function PlanViewer({ imageUrl, oldPins, detailsData, planeId,handleRefatch }: Props) {
+function PlanViewer({
+  imageUrl,
+  oldPins,
+  detailsData,
+  planeId,
+  handleRefatch,
+}: Props) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const imageRef = React.useRef<HTMLImageElement>(null);
 
@@ -70,7 +76,7 @@ function PlanViewer({ imageUrl, oldPins, detailsData, planeId,handleRefatch }: P
 
   const [pinType, setPinType] = React.useState<
     "detail" | "section" | "rectangle"
-  >("detail");
+  >("section");
 
   const [imageDimensions, setImageDimensions] = React.useState({
     width: 0,
@@ -149,8 +155,6 @@ function PlanViewer({ imageUrl, oldPins, detailsData, planeId,handleRefatch }: P
     };
 
     setTempPosition(newPosition);
-
-
   };
 
   const handleMouseUp = () => {
@@ -308,7 +312,6 @@ function PlanViewer({ imageUrl, oldPins, detailsData, planeId,handleRefatch }: P
   React.useEffect(() => {
     console.log(pinType);
   }, [pinType]);
-
 
   return (
     <div

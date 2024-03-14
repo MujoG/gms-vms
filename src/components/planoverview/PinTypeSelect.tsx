@@ -32,7 +32,7 @@ function PinTypeSelect({ setPinType, pinType }: Props) {
         >
           <RectangleHorizontal />
         </Button>
-        <Button
+        {/* <Button
           variant="ghost"
           className={cn(
             "",
@@ -41,7 +41,7 @@ function PinTypeSelect({ setPinType, pinType }: Props) {
           onClick={() => setPinType("detail")}
         >
           <Disc />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
