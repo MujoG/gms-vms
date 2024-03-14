@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
 import Sidebar from "@/components/navbar/sidebar";
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
                 <Toaster />
               </Sidebar>
             </Providers>
+            <Analytics />
           </div>
         </main>
       </body>
