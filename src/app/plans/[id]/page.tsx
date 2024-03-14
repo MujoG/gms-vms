@@ -7,6 +7,11 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import PlanViewer from "@/components/planoverview/PlanViewer";
+import Spinner from "@/components/allaround/Spinner";
+
+
+
+// Import statements remain the same
 
 type PageProps = {};
 
@@ -59,9 +64,9 @@ const Page: React.FC<PageProps> = () => {
     error: detailsError,
     refetch: refetchDetails,
   } = trpc.getArrayOfPlaneDetails.useQuery(
-    { Id: planeId },
+    { Id: planeId || "" },
     {
-      enabled: !!planeId, // Only enable the query if planeId is truthy
+      enabled: !!planeId,
       onSuccess: (detailsData) => {
         setDetails(detailsData.data.Details);
       },
@@ -81,8 +86,12 @@ const Page: React.FC<PageProps> = () => {
   }, [uuid]);
 
   return (
-    <div className="bg-red-200">
-      {(isPostLoading || isDetailsLoading) && <p>Loading...</p>}
+    <div className="">
+      {(isPostLoading || isDetailsLoading) && (
+        <>
+          <Spinner />
+        </>
+      )}
       {postError && <p>Error loading plane data</p>}
       {detailsError && <p>Error loading details</p>}
       {imageBg && (
@@ -94,14 +103,17 @@ const Page: React.FC<PageProps> = () => {
             planeId={planeId}
             handleRefatch={handleRefetch}
           />
-          <Button onClick={handleRefetch}>mujo</Button>
         </>
       )}
       {!isPostLoading &&
         !isDetailsLoading &&
         !postError &&
         !detailsError &&
-        !imageBg && <p>No image available</p>}
+        !imageBg && (
+          <>
+            <Spinner />
+          </>
+        )}
     </div>
   );
 };

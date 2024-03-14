@@ -35,16 +35,12 @@ const barItems = [
     icon: <FolderKanban />,
     tabs: [
       {
-        label: "vehicles",
-        href: "/vehicles",
+        label: "plane finder",
+        href: "/plans",
       },
       {
-        label: "available vehicles",
-        href: "/vehicles/availablevehicles",
-      },
-      {
-        label: "occupied vehicles",
-        href: "/vehicles/occupiedvehicles",
+        label: "plane by project",
+        href: "/plans/project",
       },
     ],
   },
@@ -216,7 +212,7 @@ function Sidebar({ children }: Props) {
       ) : null}
 
       {/* wrapper */}
-      <div className="w-full">
+      <div className="w-full relative">
         {pathname !== "/" ? (
           <HorizontalNavbar setShowMenu={setShowMenu} showMenu={showMenu} />
         ) : null}

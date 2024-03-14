@@ -63,7 +63,7 @@ function Page({}: Props) {
 
   return (
     <div className="mt-10 px-5">
-      <DialogWrapper open={open} onOpenChange={setOpen} />{" "}
+      {/* <DialogWrapper open={open} onOpenChange={setOpen} />{" "}
       <div className="flex flex-col">
         <div className="flex mb-2 border-b border-zinc-300 pb-2">
           <div className="flex items-center uppercase opacity-70 font-semibold text-xl">
@@ -205,7 +205,7 @@ function Page({}: Props) {
             </TableBody>
           </Table>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

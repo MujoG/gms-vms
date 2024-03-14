@@ -7,7 +7,6 @@ import ControlSelect from "./ControlSelect";
 import NewSectionForm from "./NewSectionForm";
 import PinTypeSelect from "./PinTypeSelect";
 import PinMapper from "./PinMapper";
-import { Button } from "../ui/button";
 
 interface Project {
   id: string;

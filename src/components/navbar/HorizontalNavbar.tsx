@@ -47,6 +47,17 @@ function HorizontalNavbar({ showMenu, setShowMenu }: Props) {
     },
   ];
 
+  const plansTabs = [
+    {
+      label: "plane finder",
+      href: "/plans",
+    },
+    {
+      label: "plane by project",
+      href: "/plans/project",
+    },
+  ];
+
   const noTabs: React.SetStateAction<any[] | undefined> = [];
 
   const [tabs, setTabs] = React.useState<any[]>();
@@ -58,6 +69,8 @@ function HorizontalNavbar({ showMenu, setShowMenu }: Props) {
       setTabs(ridesTabs);
     } else if (pathname.includes("analytics")) {
       setTabs(noTabs);
+    } else if (pathname.includes("plans")) {
+      setTabs(plansTabs);
     } else console.log("main page");
   }, [pathname]);
 

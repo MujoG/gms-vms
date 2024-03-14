@@ -19,7 +19,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ScanSearch } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -44,6 +44,13 @@ import { Badge } from "../ui/badge";
 import Link from "next/link";
 
 import { trpc } from "@/trpc/client";
+import Spinner from "./Spinner";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@radix-ui/react-hover-card";
+import Image from "next/image";
 
 // const data: PlanList[] = [];
 
@@ -65,6 +72,10 @@ export function PlaneDataTable() {
     []
   );
 
+  const [loading, setLoading] = React.useState(true);
+
+  const directusApiUrl = process.env.NEXT_PUBLIC_DIRECTUS_API_URL;
+
   const { data: planes } = trpc.getPlanes.useQuery();
 
   const [data, setData] = React.useState<any>();
@@ -72,22 +83,27 @@ export function PlaneDataTable() {
   React.useEffect(() => {
     if (planes && planes.data) {
       setData(planes.data);
+      console.log("test data", data);
     }
   }, [planes]);
 
   const columns: ColumnDef<PlanList>[] = [
     {
+      accessorKey: "ProjectLabel",
+      header: "ProjectLabel",
+      cell: ({ row }) => (
+        <div className="capitalize">
+          <Link href={`/plans/project/${row.getValue("ProjectLabel")}`}>
+            <Button variant="outline">{row.getValue("ProjectLabel")}</Button>
+          </Link>
+        </div>
+      ),
+    },
+    {
       accessorKey: "PlaneLabel",
       header: "Plane Label",
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("PlaneLabel")}</div>
-      ),
-    },
-    {
-      accessorKey: "ProjectLabel",
-      header: "ProjectLabel",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("ProjectLabel")}</div>
       ),
     },
     {
@@ -99,22 +115,47 @@ export function PlaneDataTable() {
     },
     {
       accessorKey: "UserEmail",
+      header: "Email",
+      cell: ({ row }) => (
+        <div className="lowercase ">{row.getValue("UserEmail")}</div>
+      ),
+    },
+
+    {
+      accessorKey: "date_created",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            UserEmail
+            Date Created
             <CaretSortIcon className="ml-2 h-4 w-4" />
           </Button>
         );
       },
-      cell: ({ row }) => (
-        <div className="lowercase ">{row.getValue("UserEmail")}</div>
-      ),
-    },
+      cell: ({ row }) => {
+        const timestamp = row.getValue("date_created") as string;
+        const date = new Date(timestamp);
 
+        // Get the date in the format 'dd.mm.yyyy' (German) and time in 24-hour format
+        const formattedDate = date.toLocaleDateString("de-DE", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+        const formattedTime = date.toLocaleTimeString("de-DE", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        return (
+          <div className="capitalize">
+            {formattedDate}, {formattedTime}
+          </div>
+        );
+      },
+    },
     {
       accessorKey: "PlaneStatus",
       header: "PlaneStatus",
@@ -137,19 +178,13 @@ export function PlaneDataTable() {
       ),
     },
     {
-      accessorKey: "date_created",
-      header: "date_created",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("date_created")}</div>
-      ),
-    },
-
-    {
       id: "actions",
       header: "Actions",
       enableHiding: false,
       cell: ({ row }) => {
         const detail = row.original;
+
+        const imageHref = `${directusApiUrl}assets/${detail.PlaneFile}`;
 
         return (
           <div className="flex justify-around">
@@ -158,6 +193,31 @@ export function PlaneDataTable() {
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </Link>
+            <Button variant="ghost" className="h-8 w-8 p-0 bg-[#47989c]">
+              <HoverCard>
+                <HoverCardTrigger>
+                  <ScanSearch />
+                </HoverCardTrigger>
+                <HoverCardContent className="bg-zinc-500 w-[500px] aspect-video mr-10 relative">
+                  {/* {loading && (
+                    <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 z-10">
+                      <Spinner />
+                    </div>
+                  )}{" "}
+                  Display spinner when loading */}
+                  <Image
+                    src={imageHref}
+                    alt="/test"
+                    width={10000}
+                    height={10000}
+                    className={`w-full h-full object-cover -z-10`}
+                    // onLoad={() => setLoading(false)}
+                    // onError={() => setLoading(false)}
+                    // style={{ opacity: loading ? 1 : 1 }}
+                  />
+                </HoverCardContent>
+              </HoverCard>
+            </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0 bg-[#47989c]">
@@ -372,7 +432,9 @@ export function PlaneDataTable() {
   </div> */}
         </div>
       ) : (
-        "Loading..."
+        <>
+          <Spinner />
+        </>
       )}
     </>
   );

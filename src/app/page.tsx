@@ -124,7 +124,7 @@ export default function Home() {
                   <LogIn className="ml-4 h-4 w-4" />
                 </Button>
 
-                <Link href="/vehicles">
+                <Link href="/plans">
                   <Button type="submit" className="bg-[#47989c]">
                     GO TO APP
                     <LogIn className="ml-4 h-4 w-4" />

@@ -49,7 +49,7 @@ function Page({}: Props) {
 
   return (
     <div className="flex flex-col mt-10 mx-2  relative px-2">
-      <DialogWrapper open={open} onOpenChange={setOpen} />
+      {/* <DialogWrapper open={open} onOpenChange={setOpen} /> */}
       <div className="text-2xl font-semibold">GOLF 8</div>
       <div>
         <div className="flex w-full justify-between items-center">
