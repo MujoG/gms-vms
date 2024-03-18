@@ -53,10 +53,11 @@ function DetailBox({
             {showIcon ? <Disc className="cursor-pointer" /> : " "}
             {label ? (
               <div className=" w-fit font-semibold text-xs">
-                <Badge variant="destructive" className="uppercase">
+                <Badge variant="destructive" className="uppercase"  >
                   {" "}
                   {label}
                 </Badge>
+                <div className="bg-blue-500 p-2 rounded-lg">Jessin</div>
               </div>
             ) : null}
           </div>

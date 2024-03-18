@@ -1,6 +1,11 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { ArrowRightFromLine, Disc, RectangleHorizontal } from "lucide-react";
+import {
+  ArrowRightFromLine,
+  Disc,
+  Info,
+  RectangleHorizontal,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -8,40 +13,33 @@ type Props = {
   setPinType: any;
 };
 
+const iconClass = "cursor-pointer w-[20px]";
+
 function PinTypeSelect({ setPinType, pinType }: Props) {
   return (
-    <div className="absolute right-5 top-5 bg-zinc-200 z-50 border border-zinc-400 rounded ">
-      <div className="flex flex-row p-2  gap-1">
-        <Button
-          variant="ghost"
+    <div className="absolute right-1/2 translate-x-1/2 top-1 bg-zinc-100 z-50 border border-zinc-400 rounded px-2">
+      <div className="flex flex-row p-1 gap-4">
+        <ArrowRightFromLine
           className={cn(
-            "",
-            pinType === "section" ? "bg-zinc-400" : "bg-transparent"
+            iconClass,
+            pinType === "section" ? "text-zinc-900" : "text-gray-500"
           )}
           onClick={() => setPinType("section")}
-        >
-          <ArrowRightFromLine />
-        </Button>
-        <Button
-          variant="ghost"
+        />
+        <RectangleHorizontal
           className={cn(
-            "",
-            pinType === "rectangle" ? "bg-zinc-400" : "bg-transparent"
+            iconClass,
+            pinType === "rectangle" ? "text-zinc-900" : "text-gray-500"
           )}
           onClick={() => setPinType("rectangle")}
-        >
-          <RectangleHorizontal />
-        </Button>
-        {/* <Button
-          variant="ghost"
+        />
+        <Info
           className={cn(
-            "",
-            pinType === "detail" ? "bg-zinc-400" : "bg-transparent"
+            iconClass,
+            pinType === "detail" ? "text-zinc-900" : "text-gray-500"
           )}
           onClick={() => setPinType("detail")}
-        >
-          <Disc />
-        </Button> */}
+        />
       </div>
     </div>
   );

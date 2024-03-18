@@ -19,21 +19,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: "Username must be at least 5 characters.",
   }),
   password: z.string().min(2, {
-    message: "Password must be at least 2 characters.",
+    message: "Password must be at least 5 characters.",
   }),
 });
 
 export default function Home() {
-  const { data } = trpc.exampleApiRoute.useQuery();
-
-  console.log("data", data);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,8 +39,25 @@ export default function Home() {
     },
   });
 
+  const router = useRouter();
+
+  const {
+    mutate: GetLogin,
+    isLoading,
+    isError,
+  } = trpc.loginUser.useMutation({
+    onSuccess: () => {
+      router.push("/analytics");
+
+      console.log("somethingn");
+    },
+  });
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    let username = values.username;
+    let EncryptedPassword = values.password;
+    GetLogin({ username: username, EncryptedPassword: EncryptedPassword });
   }
 
   return (
@@ -111,6 +125,9 @@ export default function Home() {
                       Please enter password provided by GMS.
                     </FormDescription>
                     <FormMessage />
+                    {isError ? (
+                      <FormMessage>Wrong Username or Password.</FormMessage>
+                    ) : null}
                   </FormItem>
                 )}
               />
@@ -119,17 +136,17 @@ export default function Home() {
               justify-end
               "
               >
-                <Button type="submit" className="bg-[#47989c]" disabled>
+                <Button type="submit" className="bg-[#47989c]">
                   Log In
                   <LogIn className="ml-4 h-4 w-4" />
                 </Button>
 
-                <Link href="/plans">
+                {/* <Link href="/plans">
                   <Button type="submit" className="bg-[#47989c]">
                     GO TO APP
                     <LogIn className="ml-4 h-4 w-4" />
                   </Button>
-                </Link>
+                </Link> */}
               </div>
             </form>
           </Form>

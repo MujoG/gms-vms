@@ -58,6 +58,13 @@ function HorizontalNavbar({ showMenu, setShowMenu }: Props) {
     },
   ];
 
+  const projektTabs = [
+    {
+      label: "All Projekt",
+      href: "/projekt",
+    },
+  ];
+
   const noTabs: React.SetStateAction<any[] | undefined> = [];
 
   const [tabs, setTabs] = React.useState<any[]>();
@@ -71,6 +78,8 @@ function HorizontalNavbar({ showMenu, setShowMenu }: Props) {
       setTabs(noTabs);
     } else if (pathname.includes("plans")) {
       setTabs(plansTabs);
+    } else if (pathname.includes("projekt")) {
+      setTabs(projektTabs);
     } else console.log("main page");
   }, [pathname]);
 
@@ -88,9 +97,9 @@ function HorizontalNavbar({ showMenu, setShowMenu }: Props) {
                     variant={"link"}
                     className={`${
                       pathname === item.href
-                        ? "underline text-bold bg-zinc-200"
+                        ? "underline font-semibold bg-zinc-200"
                         : ""
-                    } w-full uppercase`}
+                    } w-full uppercase text-xs`}
                   >
                     {item.label}
                   </Button>

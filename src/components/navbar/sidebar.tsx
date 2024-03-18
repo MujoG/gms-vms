@@ -12,6 +12,7 @@ import {
   ChevronsDown,
   ChevronsUpDown,
   FolderKanban,
+  FolderOpenDot,
   LineChart,
   LogOut,
 } from "lucide-react";
@@ -23,16 +24,23 @@ type Props = {
   children: React.ReactNode;
 };
 
+const iconClass = "w-[18px] h-[18px]";
+
 const barItems = [
   {
     label: "analytics",
     href: "/analytics",
-    icon: <LineChart />,
+    icon: <LineChart className={iconClass} />,
+  },
+  {
+    label: "projekt",
+    href: "/projekt",
+    icon: <FolderOpenDot className={iconClass}/>,
   },
   {
     label: "plans",
     href: "/plans",
-    icon: <FolderKanban />,
+    icon: <FolderKanban className={iconClass}/>,
     tabs: [
       {
         label: "plane finder",
@@ -126,7 +134,7 @@ function Sidebar({ children }: Props) {
                           pathname.includes(item.href)
                             ? "underline text-bold bg-zinc-300"
                             : ""
-                        } w-full uppercase`}
+                        } w-full uppercase text-xs flex justify-between`}
                         variant="link"
                       >
                         <span className="lg:flex hidden mr-2">
