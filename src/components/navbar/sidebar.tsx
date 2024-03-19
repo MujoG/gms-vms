@@ -136,7 +136,7 @@ function Sidebar({ children }: Props) {
           </div>
 
           {data ? (
-            <div className="flex flex-col mb-5 justify-center items-center gap-2">
+            <div className="flex flex-col mb-5 justify-center items-center gap-2 relative ">
               <Avatar>
                 <AvatarImage src="" />
                 <AvatarFallback className="bg-blue-200">
@@ -144,7 +144,7 @@ function Sidebar({ children }: Props) {
                 </AvatarFallback>
               </Avatar>
               <div className="flex lg:flex-row flex-col p-2 text-xs lg:text-normal">
-                {data.vorname} <span>{data.nachname}</span>
+                {data.vorname} <span className="ml-1">{data.nachname}</span>
               </div>
               {/* <div className="flex justify-center">
                 <Button variant="destructive">
@@ -153,8 +153,8 @@ function Sidebar({ children }: Props) {
               </div> */}
             </div>
           ) : (
-            <div className="relative">
-              <Spinner />
+            <div className="flex flex-col mb-5 justify-center items-center gap-2 relative ">
+              Loading...
             </div>
           )}
         </div>
