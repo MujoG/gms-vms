@@ -21,6 +21,7 @@ import { CollapsibleContent } from "../ui/collapsible";
 import useMediaQuery, { useIsSmall } from "@/hooks/UseMediaQuery";
 import { trpc } from "@/trpc/client";
 import Spinner from "../allaround/Spinner";
+import Spinner2 from "../allaround/Spinner2";
 
 type Props = {
   children: React.ReactNode;
@@ -153,8 +154,10 @@ function Sidebar({ children }: Props) {
               </div> */}
             </div>
           ) : (
-            <div className="flex flex-col mb-5 justify-center items-center gap-2 relative ">
-              Loading...
+            <div className="relative w-full h-[50px] ">
+              <div className="w-full h-full">
+                <Spinner2 />
+              </div>
             </div>
           )}
         </div>

@@ -34,16 +34,15 @@ export const getUserInfo = publicProcedure.query(async () => {
 
     const userId = decodedToken.CurrentUserID;
 
-    const url = `${process.env.GMS_GET_USER_BY_ID}`;
+    const url = `${process.env.GMS_GET_USER_BY_ID}${userId}`;
 
     console.log("Fetching user data for user ID:", userId);
 
     const response = await fetch(url, {
       method: "GET",
-              headers: {
-          authorization: `Bearer ${tokenFromCookies?.value}`,
-
-        },
+      headers: {
+        authorization: `Bearer ${tokenFromCookies?.value}`,
+      },
     });
 
     if (!response.ok) {
