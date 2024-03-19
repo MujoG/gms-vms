@@ -27,7 +27,6 @@ export const getAllProjects = publicProcedure.query(async () => {
     const listOfProjects = await response.json();
 
     fetchedData = listOfProjects;
-    console.log("m ujo", listOfProjects);
     return listOfProjects;
   } catch (error) {
     console.error("Error occurred:", error);

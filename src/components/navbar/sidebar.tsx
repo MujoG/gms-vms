@@ -19,6 +19,8 @@ import {
 import { Collapsible, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import { CollapsibleContent } from "../ui/collapsible";
 import useMediaQuery, { useIsSmall } from "@/hooks/UseMediaQuery";
+import { trpc } from "@/trpc/client";
+import Spinner from "../allaround/Spinner";
 
 type Props = {
   children: React.ReactNode;
@@ -35,12 +37,12 @@ const barItems = [
   {
     label: "projekt",
     href: "/projekt",
-    icon: <FolderOpenDot className={iconClass}/>,
+    icon: <FolderOpenDot className={iconClass} />,
   },
   {
     label: "plans",
     href: "/plans",
-    icon: <FolderKanban className={iconClass}/>,
+    icon: <FolderKanban className={iconClass} />,
     tabs: [
       {
         label: "plane finder",
@@ -52,44 +54,6 @@ const barItems = [
       },
     ],
   },
-  // {
-  //   label: "vehicles",
-  //   href: "/vehicles",
-  //   icon: <Car />,
-  //   tabs: [
-  //     {
-  //       label: "vehicles",
-  //       href: "/vehicles",
-  //     },
-  //     {
-  //       label: "available vehicles",
-  //       href: "/vehicles/availablevehicles",
-  //     },
-  //     {
-  //       label: "occupied vehicles",
-  //       href: "/vehicles/occupiedvehicles",
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: "rides",
-  //   href: "/rides",
-  //   icon: <AudioWaveform />,
-  //   tabs: [
-  //     {
-  //       label: "rides",
-  //       href: "/rides",
-  //     },
-  //     {
-  //       label: "active rides",
-  //       href: "/rides/activerides",
-  //     },
-  //     {
-  //       label: "past rides",
-  //       href: "/rides/pastrides",
-  //     },
-  //   ],
-  // },
 ];
 
 function Sidebar({ children }: Props) {
@@ -99,9 +63,30 @@ function Sidebar({ children }: Props) {
 
   const isSmall = useIsSmall();
 
+  const hiddenRoutes = ["/", "/expired"];
+  const isHiddenRoute = hiddenRoutes.includes(pathname);
+
+  const { data, isError, isLoading } = trpc.getUserInfo.useQuery();
+
+  const initials = data
+    ? `${data.vorname.charAt(0)}${data.nachname.charAt(0)}`
+    : "";
+
+  useEffect(() => {
+    if (data) {
+      console.log("data", data);
+    }
+  }, [data]);
+
   useEffect(() => {
     if (isSmall) {
       setShowMenu(false);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (pathname.includes("/expired")) {
+      console.log("expired");
     }
   }, [pathname]);
 
@@ -109,7 +94,7 @@ function Sidebar({ children }: Props) {
     <div className="flex h-[100vh] relative">
       {/* sidebar  */}
 
-      {pathname !== "/" ? (
+      {!isHiddenRoute ? (
         <div className=" hidden sm:flex flex-col w-[70px] lg:w-[310px] bg-zinc-100 h-[100vh]  p-2 border-r border-zinc-300 justify-between ">
           <div>
             <div className="pb-10">
@@ -150,20 +135,28 @@ function Sidebar({ children }: Props) {
             </div>
           </div>
 
-          <div className="flex flex-col mb-5 justify-center items-center gap-2">
-            <Avatar>
-              <AvatarImage src="" />
-              <AvatarFallback className="bg-blue-200">NL</AvatarFallback>
-            </Avatar>
-            <div className="flex lg:flex-row flex-col p-2 text-xs lg:text-normal">
-              Name <span>LastName</span>
+          {data ? (
+            <div className="flex flex-col mb-5 justify-center items-center gap-2">
+              <Avatar>
+                <AvatarImage src="" />
+                <AvatarFallback className="bg-blue-200">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex lg:flex-row flex-col p-2 text-xs lg:text-normal">
+                {data.vorname} <span>{data.nachname}</span>
+              </div>
+              {/* <div className="flex justify-center">
+                <Button variant="destructive">
+                  <span className="mr-2 hidden lg:flex">LogOut</span> <LogOut />
+                </Button>
+              </div> */}
             </div>
-            <div className="flex justify-center">
-              <Button variant="destructive">
-                <span className="mr-2 hidden lg:flex">LogOut</span> <LogOut />
-              </Button>
+          ) : (
+            <div className="relative">
+              <Spinner />
             </div>
-          </div>
+          )}
         </div>
       ) : null}
 
@@ -221,7 +214,7 @@ function Sidebar({ children }: Props) {
 
       {/* wrapper */}
       <div className="w-full relative">
-        {pathname !== "/" ? (
+        {!isHiddenRoute ? (
           <HorizontalNavbar setShowMenu={setShowMenu} showMenu={showMenu} />
         ) : null}
         {children}

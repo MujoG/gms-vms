@@ -6,18 +6,17 @@ import cookie from "cookie";
 import { decodeAuth, verifyAuth } from "@/lib/auth";
 import { CreateCookies } from "@/app/actions/actions";
 import { getAllProjects } from "./procedures/projektProcedures";
+import { getUserInfo } from "./procedures/userProcedures";
 
 export const appRouter = router({
   exampleApiRoute: publicProcedure.query(() => {
     return "hello motherfucker";
   }),
+  getUserInfo,
   postZipCode: publicProcedure
     .input(z.object({ Id: z.string() }))
     .query(async ({ input }) => {
       let fetchedData = null;
-
-      // console.log('input')
-      // console.log(input, 'the input');
 
       try {
         const url = `${process.env.DIRECTUS_API_URL}items/Plane/${input.Id}`;

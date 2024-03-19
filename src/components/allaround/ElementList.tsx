@@ -14,7 +14,7 @@ export default function ElementList({ data }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-12 sm:grid sm:grid-cols-2 lg:grid-cols-3 p-5">
+    <div className="flex flex-col gap-12 sm:grid sm:grid-cols-2 lg:grid-cols-3 p-5 ">
       {data.map((item) => {
         return (
           <Link

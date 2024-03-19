@@ -71,7 +71,6 @@ export function PlaneDataTable() {
   React.useEffect(() => {
     if (planes && planes.data) {
       setData(planes.data);
-      console.log("test data", data);
     }
   }, [planes]);
 
@@ -267,7 +266,6 @@ export function PlaneDataTable() {
     },
   });
 
-  console.log("Table object:", table);
   return (
     <>
       {data && data.length > 0 ? (
@@ -283,7 +281,6 @@ export function PlaneDataTable() {
                 setFilterValue(filterType, event.target.value)
               }
               className="max-w-sm"
-             
             />{" "}
             <div className="flex flex-row gap-2">
               <DropdownMenu>

@@ -1,5 +1,6 @@
 "use server";
 
+import { decodeAuth } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -23,4 +24,17 @@ export async function CheckCookie(cookieName: string, req: NextRequest) {
   } else {
     console.log("nema majku mu jebem ");
   }
+}
+
+
+export async function DecodedUserAuth(req:NextRequest){
+  const token = req.cookies.get("user-token")?.value;
+
+  const decodedToken =
+    token &&
+    (await decodeAuth(token).catch((err) => {
+      console.log(err);
+    }));
+
+    return decodedToken
 }
