@@ -11,6 +11,7 @@ type Props = {
   pinType: any;
   detailsData: any;
   handleRefatch: any;
+  zoom: any;
 };
 
 function PinMapper({
@@ -22,6 +23,7 @@ function PinMapper({
   pinType,
   detailsData,
   handleRefatch,
+  zoom,
 }: Props) {
   return (
     <div>
@@ -98,6 +100,7 @@ function PinMapper({
                           pin={pin}
                           showIcon
                           handleRefatch={handleRefatch}
+                          zoom={zoom}
                         />
                       </span>
                     </div>
@@ -146,6 +149,7 @@ function PinMapper({
                       handlePinClick={handlePinClick}
                       pin={pin}
                       handleRefatch={handleRefatch}
+                      zoom={zoom}
                     />
                   </div>
                   {/* arrow icon and location  */}
@@ -157,17 +161,21 @@ function PinMapper({
                       transform: `translate(-50%, -50%) rotate(${perpendicularAngle}rad)`,
                     }}
                   >
-                    <div className="absolute w-full h-full -top-[75%] -left-[65%] flex items-center justify-center">
+                    <div className="absolute w-full h-full -top-[55%] -left-[65%] flex items-center justify-center">
                       <div
                         className={`${
                           pin.direction === "right" ? "rotate-180" : ""
-                        } text-red-500 text-lg uppercase font-bold`}
+                        } text-red-500 text-xs uppercase font-semibold`}
                       >
                         {pin.DetailLabel}
                       </div>
                     </div>
                     <div className="absolute w-full h-full top-[5%] -left-[65%] flex items-center justify-center">
-                      <MoveRight className="text-red-500 text-2xl" />
+                      <MoveRight
+                        className="text-red-500 w-[25px] h-[25px]"
+                        style={{}}
+                      />
+                      {/* {zoom} */}
                     </div>
                   </div>
 
@@ -203,6 +211,7 @@ function PinMapper({
                       handlePinClick={handlePinClick}
                       pin={pin}
                       handleRefatch={handleRefatch}
+                      zoom={zoom}
                     />
                   </div>
                   <div
@@ -217,13 +226,13 @@ function PinMapper({
                       <div
                         className={`${
                           pin.direction === "right" ? "rotate-180" : ""
-                        } text-red-500 text-lg uppercase font-bold`}
+                        } text-red-500 text-xs uppercase font-semibold`}
                       >
                         {pin.DetailLabel}
                       </div>
                     </div>
                     <div className="absolute w-full h-full -top-[5%] -left-[65%] flex items-center justify-center">
-                      <MoveRight className="text-red-500 text-2xl" />
+                      <MoveRight className="text-red-500 w-[25px] h-[25px]" />
                     </div>
                   </div>
                 </>
@@ -258,6 +267,7 @@ function PinMapper({
                         pin={pin}
                         label={pin.DetailLabel}
                         handleRefatch={handleRefatch}
+                        zoom={zoom}
                       />
                     </div>
                   </div>

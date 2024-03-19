@@ -9,7 +9,7 @@ type Props = {
 export default function ElementList({ data }: Props) {
   if (data.length === 0) {
     <div className="flex flex-col">
-      <h1>No news published yet. Come back later.</h1>
+      <h1>No Projekt published yet. Come back later.</h1>
     </div>;
   }
 

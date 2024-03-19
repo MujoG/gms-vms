@@ -36,11 +36,11 @@ function Projekt({}: Props) {
             <div className="flex flex-col">
               {/* Desktop header */}
               <h1 className="hidden md:block md:text-3xl uppercase font-bolder tracking-tightest leading-[100px]">
-                Latest News
+                Projekts
               </h1>
               {/* Mobile header */}
               <div className="flex flex-col font-light tracking-tightest leading-[50px] mt-16 mb-10 md:hidden">
-                <h1 className="text-[50px] tracking-tightest">Latest News</h1>
+                <h1 className="text-[50px] tracking-tightest">Projekts</h1>
               </div>
               {/* <TabMenu /> */}
             </div>

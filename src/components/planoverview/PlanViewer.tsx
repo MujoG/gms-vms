@@ -408,6 +408,7 @@ function PlanViewer({
             pinType={pinType}
             detailsData={detailsData}
             handleRefatch={handleRefatch}
+            zoom={zoom}
           />
         </div>
       </div>

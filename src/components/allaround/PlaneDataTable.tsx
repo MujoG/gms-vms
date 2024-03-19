@@ -52,18 +52,6 @@ import {
 } from "@radix-ui/react-hover-card";
 import Image from "next/image";
 
-// const data: PlanList[] = [];
-
-// // export type PlanList = {
-// //   id: string;
-// //   planeLabel: string;
-// //   ProjectLabel: string;
-// //   PlaneStatus: "pending" | "success" | "failed";
-// //   UserEmail: string;
-// //   user: string;
-// //   date_created: Date;
-// // };
-
 export type PlanList = any;
 
 export function PlaneDataTable() {
@@ -94,7 +82,9 @@ export function PlaneDataTable() {
       cell: ({ row }) => (
         <div className="capitalize">
           <Link href={`/plans/project/${row.getValue("ProjectLabel")}`}>
-            <Button variant="outline">{row.getValue("ProjectLabel")}</Button>
+            <Button variant="outline" size="sm">
+              {row.getValue("ProjectLabel")}
+            </Button>
           </Link>
         </div>
       ),
@@ -186,17 +176,19 @@ export function PlaneDataTable() {
 
         const imageHref = `${directusApiUrl}assets/${detail.PlaneFile}`;
 
+        const iconClass = "h-6 w-6 p-0 bg-[#47989c]";
+
         return (
-          <div className="flex justify-around">
+          <div className="flex justify-around gap-2 items-center">
             <Link href={`/plans/${row.original.id}`}>
-              <Button variant="ghost" className="h-8 w-8 p-0 bg-[#47989c]">
+              <Button variant="ghost" className={iconClass}>
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </Link>
-            <Button variant="ghost" className="h-8 w-8 p-0 bg-[#47989c]">
+            <Button variant="ghost" className={iconClass}>
               <HoverCard>
                 <HoverCardTrigger>
-                  <ScanSearch />
+                  <ScanSearch className="h-5 w-5" />
                 </HoverCardTrigger>
                 <HoverCardContent className="bg-zinc-500 w-[700px] aspect-video mr-10 relative">
                   {/* {loading && (
@@ -220,7 +212,7 @@ export function PlaneDataTable() {
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0 bg-[#47989c]">
+                <Button variant="ghost" className={iconClass}>
                   <span className="sr-only">Open menu</span>
                   <DotsHorizontalIcon className="h-4 w-4" />
                 </Button>
@@ -291,6 +283,7 @@ export function PlaneDataTable() {
                 setFilterValue(filterType, event.target.value)
               }
               className="max-w-sm"
+             
             />{" "}
             <div className="flex flex-row gap-2">
               <DropdownMenu>

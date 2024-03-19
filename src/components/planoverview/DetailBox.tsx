@@ -15,6 +15,7 @@ type Props = {
   showIcon?: boolean;
   label?: string;
   handleRefatch?: any;
+  zoom: any;
 };
 
 function DetailBox({
@@ -23,6 +24,7 @@ function DetailBox({
   showIcon,
   label,
   handleRefatch,
+  zoom,
 }: Props) {
   const { mutate: deleteDetailMutation, isLoading } =
     trpc.deleteDetail.useMutation({
@@ -53,7 +55,7 @@ function DetailBox({
             {showIcon ? <Disc className="cursor-pointer" /> : " "}
             {label ? (
               <div className=" w-fit font-semibold text-xs">
-                <Badge variant="destructive" className="uppercase"  >
+                <Badge variant="destructive" className="uppercase">
                   {" "}
                   {label}
                 </Badge>
