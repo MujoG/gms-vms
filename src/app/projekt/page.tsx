@@ -29,7 +29,7 @@ function Projekt({}: Props) {
       <div className="text-center ">
         <div className="w-full">
           {/* News posts */}
-          <div className="z-20 sm:mt-16">
+          <div className="z-10 sm:mt-16">
             <ElementList data={projekts} />
           </div>
         </div>

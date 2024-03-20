@@ -8,8 +8,12 @@ import {
   Lock,
   Hand,
   Grab,
+  ArrowRightFromLine,
+  RectangleHorizontal,
+  Info,
 } from "lucide-react";
 import React from "react";
+import { Separator } from "../ui/separator";
 
 type Props = {
   zoomHandler: any;
@@ -19,10 +23,11 @@ type Props = {
   setLockView: any;
   setDragging: any;
   dragging: any;
+  pinType: any;
+  setPinType: any;
 };
 
-const iconsClass =
-  "w-[22px] h-[22px] hover:bg-zinc-100 hover:scale-125 cursor-pointer rounded";
+const iconClass = "cursor-pointer w-[20px]";
 
 function ControlSelect({
   zoomHandler,
@@ -32,55 +37,85 @@ function ControlSelect({
   lockView,
   setDragging,
   dragging,
+  setPinType,
+  pinType,
 }: Props) {
   return (
-    <div className="absolute right-5 bottom-12 bg-zinc-200 z-50 ">
-      <div className="flex flex-col p-2 border border-zinc-400 rounded gap-2">
+    <div className="absolute right-1/2 translate-x-1/2 top-2 bg-zinc-100 z-10 border border-zinc-400 rounded px-2">
+      <div className="flex flex-row p-1 gap-2 items-center">
+        <ArrowRightFromLine
+          className={cn(
+            iconClass,
+            pinType === "section" ? "text-zinc-900" : "text-gray-500"
+          )}
+          onClick={() => setPinType("section")}
+        />
+        <div className="w-[1px] bg-zinc-200 h-[20px]" />
+
+        <RectangleHorizontal
+          className={cn(
+            iconClass,
+            pinType === "rectangle" ? "text-zinc-900" : "text-gray-500"
+          )}
+          onClick={() => setPinType("rectangle")}
+        />
+        <div className="w-[1px] bg-zinc-200 h-[20px]" />
+        <Info
+          className={cn(
+            iconClass,
+            pinType === "detail" ? "text-zinc-900" : "text-gray-500"
+          )}
+          onClick={() => setPinType("detail")}
+        />
+        <div className="w-[1px] bg-zinc-200 h-[20px]" />
+
         <ZoomIn
-          className={cn("", iconsClass)}
+          className={cn("", iconClass)}
           onClick={() => zoomHandler(0.1)}
         />
-        <div className="border-y py-2">
-          <ZoomOut
-            className={cn("", iconsClass)}
-            onClick={() => zoomHandler(-0.1)}
+        <div className="w-[1px] bg-zinc-200 h-[20px]" />
+
+        <ZoomOut
+          className={cn("", iconClass)}
+          onClick={() => zoomHandler(-0.1)}
+        />
+        <div className="w-[1px] bg-zinc-200 h-[20px]" />
+
+        {dragging ? (
+          <Grab
+            className={cn("", iconClass)}
+            onClick={() => setDragging(false)}
           />
-        </div>
-        <div className="border-b pb-2">
-          {dragging ? (
-            <Grab
-              className={cn("", iconsClass)}
-              onClick={() => setDragging(false)}
-            />
-          ) : (
-            <Hand
-              className={cn("", iconsClass)}
-              onClick={() => setDragging(true)}
-            />
-          )}
-        </div>
-        <div className="border-b py-2">
-          {fullScreen ? (
-            <Shrink
-              className={cn("", iconsClass)}
-              onClick={() => setFullScreen(false)}
-            />
-          ) : (
-            <Fullscreen
-              className={cn("", iconsClass)}
-              onClick={() => setFullScreen(true)}
-            />
-          )}
-        </div>
+        ) : (
+          <Hand
+            className={cn("", iconClass)}
+            onClick={() => setDragging(true)}
+          />
+        )}
+        <div className="w-[1px] bg-zinc-200 h-[20px]" />
+
+        {fullScreen ? (
+          <Shrink
+            className={cn("", iconClass)}
+            onClick={() => setFullScreen(false)}
+          />
+        ) : (
+          <Fullscreen
+            className={cn("", iconClass)}
+            onClick={() => setFullScreen(true)}
+          />
+        )}
+
+        <div className="w-[1px] bg-zinc-200 h-[20px]" />
 
         {lockView ? (
           <Unlock
-            className={cn("", iconsClass)}
+            className={cn("", iconClass)}
             onClick={() => setLockView(false)}
           />
         ) : (
           <Lock
-            className={cn("", iconsClass)}
+            className={cn("", iconClass)}
             onClick={() => setLockView(true)}
           />
         )}

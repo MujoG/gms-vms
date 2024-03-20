@@ -166,7 +166,7 @@ function Sidebar({ children }: Props) {
       {/* dropmenubar*/}
 
       {showMenu ? (
-        <div className="absolute bg-zinc-50 inset w-full h-full z-10 pt-[48px]">
+        <div className="absolute bg-zinc-50 inset w-full h-full z-20 pt-[48px]">
           <div className="m-2">
             <ul className="mt-10">
               {barItems.map((item, index) => (

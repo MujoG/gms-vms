@@ -135,6 +135,24 @@ function PinMapper({
 
               console.log(pin, "pinmujo");
 
+              const baseIconSize = 25;
+              const baseStrokeSize = 3;
+
+              // Calculate the scaled size based on the zoom level
+              const scaledSize = baseIconSize / zoom;
+              const baseFontSize = 24;
+              // Cap the scaled size to ensure it remains within a reasonable range
+              const cappedScaledSize = Math.min(Math.max(scaledSize, 15), 35);
+
+              const fontScaledSize = Math.min(
+                Math.max(baseFontSize / zoom, 7),
+                9
+              );
+              const strokeWidthScaled = Math.min(
+                Math.max(baseStrokeSize / zoom, 1),
+                3
+              );
+
               return (
                 <>
                   <div
@@ -166,14 +184,20 @@ function PinMapper({
                         className={`${
                           pin.direction === "right" ? "rotate-180" : ""
                         } text-red-500 text-xs uppercase font-semibold`}
+                        style={{
+                          fontSize: fontScaledSize,
+                        }}
                       >
                         {pin.DetailLabel}
                       </div>
                     </div>
                     <div className="absolute w-full h-full top-[5%] -left-[65%] flex items-center justify-center">
                       <MoveRight
-                        className="text-red-500 w-[25px] h-[25px]"
-                        style={{}}
+                        className="text-red-500 "
+                        style={{
+                          width: cappedScaledSize,
+                          height: cappedScaledSize,
+                        }}
                       />
                       {/* {zoom} */}
                     </div>
@@ -196,7 +220,7 @@ function PinMapper({
                       x2={pin.X2 !== undefined ? `${pin.X2}%` : "0%"}
                       y2={pin.Y2 !== undefined ? `${pin.Y2}%` : "0%"}
                       stroke="red"
-                      strokeWidth="3"
+                      strokeWidth={`${strokeWidthScaled}`}
                     />
                   </svg>
                   <div
@@ -227,12 +251,21 @@ function PinMapper({
                         className={`${
                           pin.direction === "right" ? "rotate-180" : ""
                         } text-red-500 text-xs uppercase font-semibold`}
+                        style={{
+                          fontSize: fontScaledSize,
+                        }}
                       >
                         {pin.DetailLabel}
                       </div>
                     </div>
                     <div className="absolute w-full h-full -top-[5%] -left-[65%] flex items-center justify-center">
-                      <MoveRight className="text-red-500 w-[25px] h-[25px]" />
+                      <MoveRight
+                        className="text-red-500 w-[25px] h-[25px]"
+                        style={{
+                          width: cappedScaledSize,
+                          height: cappedScaledSize,
+                        }}
+                      />
                     </div>
                   </div>
                 </>
@@ -250,6 +283,20 @@ function PinMapper({
 
               const endX = (pin.X2 / 100) * containerWidth;
               const endY = (pin.Y2 / 100) * containerHeight;
+
+              const baseIconSize = 25;
+              const baseStrokeSize = 3;
+
+              // Calculate the scaled size based on the zoom level
+              const scaledSize = baseIconSize / zoom;
+
+              // Cap the scaled size to ensure it remains within a reasonable range
+              const cappedScaledSize = Math.min(Math.max(scaledSize, 15), 35);
+              const fontScaledSize = Math.min(Math.max(scaledSize, 7), 12);
+              const strokeWidthScaled = Math.min(
+                Math.max(baseStrokeSize / zoom, 1),
+                3
+              );
 
               return (
                 <>

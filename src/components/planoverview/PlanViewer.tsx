@@ -313,6 +313,35 @@ function PlanViewer({
     console.log(pinType);
   }, [pinType]);
 
+  const handleKeyPress = (event: KeyboardEvent) => {
+    // Check if the pressed key is '1'
+    if (event.key === "Escape") {
+      console.log("Number 1 pressed");
+      setTempPin({});
+      setTempPins({});
+      setnewSectionPins([]);
+    }
+    if (event.key === "1") {
+      setPinType("section");
+    }
+    if (event.key === "2") {
+      setPinType("rectangle");
+    }
+    if (event.key === "3") {
+      setPinType("detail");
+    }
+  };
+
+  React.useEffect(() => {
+    // Add event listener when component mounts
+    document.addEventListener("keydown", handleKeyPress);
+
+    // Remove event listener when component unmounts
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
   return (
     <div
       className={cn(
@@ -350,6 +379,8 @@ function PlanViewer({
         setLockView={setLockView}
         setDragging={setDragging}
         dragging={dragging}
+        pinType={pinType}
+        setPinType={setPinType}
       />
       {/* dialog thing */}
       <NewSectionForm
@@ -369,7 +400,7 @@ function PlanViewer({
         handleRefatch={handleRefatch}
       />
       {/* this is for adding or removing pins */}
-      <PinTypeSelect pinType={pinType} setPinType={setPinType} />
+      {/* <PinTypeSelect pinType={pinType} setPinType={setPinType} /> */}
       {/* image container */}
       <div
         className={cn(

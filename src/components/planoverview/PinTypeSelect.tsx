@@ -17,7 +17,7 @@ const iconClass = "cursor-pointer w-[20px]";
 
 function PinTypeSelect({ setPinType, pinType }: Props) {
   return (
-    <div className="absolute right-1/2 translate-x-1/2 top-1 bg-zinc-100 z-50 border border-zinc-400 rounded px-2">
+    <div className="absolute right-1/2 translate-x-1/2 top-1 bg-zinc-100 z-10 border border-zinc-400 rounded px-2">
       <div className="flex flex-row p-1 gap-4">
         <ArrowRightFromLine
           className={cn(

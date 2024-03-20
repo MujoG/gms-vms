@@ -46,6 +46,15 @@ function DetailBox({
     }
   };
 
+  const baseContainerSize = 300;
+  const baseFontSize = 24;
+
+  const scaledContainerSize = baseContainerSize / zoom;
+
+  const cappedContainerSize = Math.min(Math.max(scaledContainerSize, 170), 255);
+
+  const fontScaledSize = Math.min(Math.max(baseFontSize / zoom, 7), 9);
+
   return (
     <>
       {" "}
@@ -57,17 +66,28 @@ function DetailBox({
               <div className=" w-fit font-semibold text-xs">
                 <Badge variant="destructive" className="uppercase">
                   {" "}
-                  {label}
+                  <span
+                    style={{
+                      fontSize: fontScaledSize,
+                    }}
+                  >
+                    {label}
+                  </span>
                 </Badge>
-                <div className="bg-blue-500 p-2 rounded-lg">Jessin</div>
               </div>
             ) : null}
           </div>
         </HoverCardTrigger>
-        <HoverCardContent className="bg-zinc-600 w-[350px] aspect-square flex flex-col rounded-lg text-white">
-          <div className="h-full ">
+        <HoverCardContent
+          className="bg-zinc-600  aspect-square flex flex-col rounded-lg text-white"
+          style={{
+            width: `${cappedContainerSize}px`,
+            height: `${cappedContainerSize}px`,
+          }}
+        >
+          <div className="h-full text-xs">
             <div className="flex flex-col justify-between h-full  p-2">
-              <div>{pin.X}</div>
+              <div>{cappedContainerSize}</div>
               <div>{pin.Y}</div>
               <div>{pin.X2}</div>
               <div>{pin.Y2}</div>
