@@ -27,7 +27,7 @@ type Props = {
   setPinType: any;
 };
 
-const iconClass = "cursor-pointer w-[20px]";
+const iconClass = "cursor-pointer w-[20px] text-gray-500";
 
 function ControlSelect({
   zoomHandler,
@@ -43,52 +43,89 @@ function ControlSelect({
   return (
     <div className="absolute right-1/2 translate-x-1/2 top-2 bg-zinc-100 z-10 border border-zinc-400 rounded px-2">
       <div className="flex flex-row p-1 gap-2 items-center">
-        <ArrowRightFromLine
-          className={cn(
-            iconClass,
-            pinType === "section" ? "text-zinc-900" : "text-gray-500"
-          )}
-          onClick={() => setPinType("section")}
-        />
+        <div className="relative">
+          <ArrowRightFromLine
+            className={cn(
+              iconClass,
+              pinType === "section" ? "text-zinc-900" : "text-gray-500"
+            )}
+            onClick={() => setPinType("section")}
+          />{" "}
+          <span
+            className={cn(
+              "text-[7px] absolute -bottom-1 -right-1",
+              pinType === "section" ? "text-zinc-900" : "text-gray-500"
+            )}
+          >
+            1
+          </span>
+        </div>
         <div className="w-[1px] bg-zinc-200 h-[20px]" />
 
-        <RectangleHorizontal
-          className={cn(
-            iconClass,
-            pinType === "rectangle" ? "text-zinc-900" : "text-gray-500"
-          )}
-          onClick={() => setPinType("rectangle")}
-        />
+        <div className="relative">
+          <RectangleHorizontal
+            className={cn(
+              iconClass,
+              pinType === "rectangle" ? "text-zinc-900" : "text-gray-500"
+            )}
+            onClick={() => setPinType("rectangle")}
+          />{" "}
+          <span
+            className={cn(
+              "text-[7px] absolute -bottom-1 -right-1",
+              pinType === "section" ? "text-zinc-900" : "text-gray-500"
+            )}
+          >
+            2
+          </span>
+        </div>
         <div className="w-[1px] bg-zinc-200 h-[20px]" />
-        <Info
-          className={cn(
-            iconClass,
-            pinType === "detail" ? "text-zinc-900" : "text-gray-500"
-          )}
-          onClick={() => setPinType("detail")}
-        />
-        <div className="w-[1px] bg-zinc-200 h-[20px]" />
+
+        <div className="relative">
+          <Info
+            className={cn(
+              iconClass,
+              pinType === "detail" ? "text-zinc-900" : "text-gray-500"
+            )}
+            onClick={() => setPinType("detail")}
+          />{" "}
+          <span
+            className={cn(
+              "text-[7px] absolute -bottom-1 -right-1",
+              pinType === "section" ? "text-zinc-900" : "text-gray-500"
+            )}
+          >
+            3
+          </span>
+        </div>
+        <div className="w-[1px] bg-zinc-400 h-[20px]" />
 
         <ZoomIn
-          className={cn("", iconClass)}
+          className={cn("hover:text-zinc-900", iconClass)}
           onClick={() => zoomHandler(0.1)}
         />
         <div className="w-[1px] bg-zinc-200 h-[20px]" />
 
         <ZoomOut
-          className={cn("", iconClass)}
+          className={cn("hover:text-zinc-900", iconClass)}
           onClick={() => zoomHandler(-0.1)}
         />
         <div className="w-[1px] bg-zinc-200 h-[20px]" />
 
         {dragging ? (
           <Grab
-            className={cn("", iconClass)}
+            className={cn(
+              iconClass,
+              dragging ? "text-zinc-900" : "text-gray-500"
+            )}
             onClick={() => setDragging(false)}
           />
         ) : (
           <Hand
-            className={cn("", iconClass)}
+            className={cn(
+              iconClass,
+              dragging ? "text-zinc-900" : "text-gray-500"
+            )}
             onClick={() => setDragging(true)}
           />
         )}
@@ -96,12 +133,18 @@ function ControlSelect({
 
         {fullScreen ? (
           <Shrink
-            className={cn("", iconClass)}
+            className={cn(
+              iconClass,
+              fullScreen ? "text-zinc-900" : "text-gray-500"
+            )}
             onClick={() => setFullScreen(false)}
           />
         ) : (
           <Fullscreen
-            className={cn("", iconClass)}
+            className={cn(
+              iconClass,
+              !fullScreen ? "text-zinc-900" : "text-gray-500"
+            )}
             onClick={() => setFullScreen(true)}
           />
         )}
@@ -110,12 +153,18 @@ function ControlSelect({
 
         {lockView ? (
           <Unlock
-            className={cn("", iconClass)}
+            className={cn(
+              iconClass,
+              !lockView ? "text-zinc-900" : "text-gray-500"
+            )}
             onClick={() => setLockView(false)}
           />
         ) : (
           <Lock
-            className={cn("", iconClass)}
+            className={cn(
+              iconClass,
+              lockView ? "text-zinc-900" : "text-gray-500"
+            )}
             onClick={() => setLockView(true)}
           />
         )}
