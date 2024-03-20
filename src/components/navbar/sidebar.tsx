@@ -92,11 +92,11 @@ function Sidebar({ children }: Props) {
   }, [pathname]);
 
   return (
-    <div className="flex h-[100vh] relative">
+    <div className="flex h-[100vh] relative ">
       {/* sidebar  */}
 
       {!isHiddenRoute ? (
-        <div className=" hidden sm:flex flex-col w-[70px] lg:w-[310px] bg-zinc-100 h-[100vh]  p-2 border-r border-zinc-300 justify-between ">
+        <div className="hidden sm:flex flex-col w-[70px] lg:w-[310px] bg-zinc-100 h-[100vh]  p-2 border-r border-zinc-300 justify-between z-50">
           <div>
             <div className="pb-10">
               <Image
@@ -216,7 +216,7 @@ function Sidebar({ children }: Props) {
       ) : null}
 
       {/* wrapper */}
-      <div className="w-full relative">
+      <div className="w-full">
         {!isHiddenRoute ? (
           <HorizontalNavbar setShowMenu={setShowMenu} showMenu={showMenu} />
         ) : null}

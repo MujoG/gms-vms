@@ -9,8 +9,6 @@ import { Button } from "@/components/ui/button";
 import PlanViewer from "@/components/planoverview/PlanViewer";
 import Spinner from "@/components/allaround/Spinner";
 
-
-
 // Import statements remain the same
 
 type PageProps = {};
