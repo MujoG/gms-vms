@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
 import Sidebar from "@/components/navbar/sidebar";
 import { Toaster } from "@/components/ui/toaster";
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
+import { CookiesProvider } from "next-client-cookies/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +29,7 @@ export default function RootLayout({
           <div className="flex-grow flex-1">
             <Providers>
               <Sidebar>
-                {children}
+                <CookiesProvider>{children}</CookiesProvider>
                 <Toaster />
               </Sidebar>
             </Providers>

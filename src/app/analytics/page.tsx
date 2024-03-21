@@ -42,10 +42,15 @@ function Page({}: Props) {
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row my-10">
+        <div className="flex flex-col md:flex-row">
           <div className="chart-container">
             <h3>Tasks Completed</h3>
-            <LineChart width={500} height={300} data={userData}>
+            <LineChart
+              width={500}
+              height={300}
+              data={userData}
+              margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+            >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
@@ -57,7 +62,12 @@ function Page({}: Props) {
 
           <div className="chart-container">
             <h3>Project Hours</h3>
-            <LineChart width={500} height={300} data={userData}>
+            <LineChart
+              width={500}
+              height={300}
+              data={userData}
+              margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+            >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />

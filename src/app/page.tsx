@@ -2,6 +2,7 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { trpc } from "@/trpc/client";
 
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -20,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -48,10 +50,9 @@ export default function Home() {
   } = trpc.loginUser.useMutation({
     onSuccess: () => {
       router.push("/analytics");
-
-      console.log("somethingn");
     },
   });
+
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -59,6 +60,13 @@ export default function Home() {
     let EncryptedPassword = values.password;
     GetLogin({ username: username, EncryptedPassword: EncryptedPassword });
   }
+
+  useEffect(() => {
+
+
+
+    console.log("jesssin from inistial route");
+  }, []);
 
   return (
     <main>
