@@ -49,7 +49,13 @@ const formSchema = z.object({
   label: z.string().min(1, {
     message: "Label must be at least 1 character.",
   }),
+  content: z.string().min(1, {
+    message: "Content must be at least 1 character.",
+  }),
   orientation: z.string().min(1, {
+    message: "Label must be at least 1 character.",
+  }),
+  taskType: z.string().min(1, {
     message: "Label must be at least 1 character.",
   }),
 });
@@ -78,7 +84,9 @@ function NewSectionForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       label: "",
+      content: "",
       orientation: "right",
+      taskType: "info",
     },
   });
 
@@ -95,40 +103,88 @@ function NewSectionForm({
       },
     });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      let x = tempPins.start.x;
-      let y = tempPins.start.y;
-      let x2 = tempPins.end.x2;
-      let y2 = tempPins.end.y2;
-
-      let label = values.label;
-      let direction = values.orientation;
-      let detailType = pinType;
-
-      let PlaneId = planeId;
-
-      const newPin: any = {
-        X: x,
-        Y: y,
-        X2: x2,
-        Y2: y2,
-        DetailType: detailType,
-        DetailLabel: label,
-        DetailDirection: direction,
-        PlaneId: PlaneId,
-      };
-
-      // Call the createNewDetail mutation
-      await createNewDetail({
-        newPin,
-      });
-
-      setTempPin({});
-      setTempPins({});
+  const { mutate: createNewTask, isError } = trpc.createNewTask.useMutation({
+    onSuccess: (newDetailData) => {
+      console.log("Success from mutate createNewDetail:", newDetailData);
+      queryClient.invalidateQueries(["getPlaneDetails", planeId]);
+      handleRefatch();
       setOpen(false);
-    } catch (error) {
-      console.error("Error submitting form:", error);
+    },
+    onError: (error) => {
+      console.error("Error from mutate createNewDetail:", error);
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    let detailType = pinType;
+
+    if (detailType === "detail") {
+      console.log("ovo je detalj");
+      try {
+        let x = tempPins.start.x;
+        let y = tempPins.start.y;
+        let detailContent = values.content;
+        let label = values.label;
+        let detailType = pinType;
+        let taskType = values.taskType;
+        let PlaneId = planeId;
+
+        const newPin: any = {
+          X: x,
+          Y: y,
+          DetailType: detailType,
+          DetailLabel: label,
+          PlaneId: PlaneId,
+          DetailContent: detailContent,
+          TaskType : taskType
+        };
+
+        await createNewTask({
+          newPin,
+        });
+
+        setTempPin({});
+        setTempPins({});
+        setOpen(false);
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
+    } else {
+      try {
+        let x = tempPins.start.x;
+        let y = tempPins.start.y;
+        let x2 = tempPins.end.x2;
+        let y2 = tempPins.end.y2;
+        let detailContent = values.content;
+        let label = values.label;
+        let direction = values.orientation;
+        let detailType = pinType;
+        let detailOrientation = values.orientation;
+        let PlaneId = planeId;
+
+        const newPin: any = {
+          X: x,
+          Y: y,
+          X2: x2,
+          Y2: y2,
+          DetailType: detailType,
+          DetailLabel: label,
+          DetailDirection: direction,
+          DetailOrientation: detailOrientation,
+          PlaneId: PlaneId,
+          DetailContent: detailContent,
+        };
+
+        await createNewDetail({
+          newPin,
+        });
+
+        setTempPin({});
+        setTempPins({});
+        setOpen(false);
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
     }
   }
 
@@ -164,6 +220,49 @@ function NewSectionForm({
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="content"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Detail Content</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Content" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This Label represent this Detail
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {pinType === "detail" ? (
+                <FormField
+                  control={form.control}
+                  name="taskType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Ticket Type</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select Ticket Type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="info">Info</SelectItem>
+                          <SelectItem value="task">Task</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {/* <FormDescription>Select Orientation.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ) : null}
               {pinType === "section" ? (
                 <FormField
                   control={form.control}
@@ -192,8 +291,8 @@ function NewSectionForm({
                   )}
                 />
               ) : null}
-              <div>Add New Detail or Choose from Details on project?</div>
-              <div className="flex gap-2">
+              {/* <div>Add New Detail or Choose from Details on project?</div> */}
+              {/* <div className="flex gap-2">
                 <Button onClick={() => setNewDetail(true)}>
                   Add New Detail to project
                 </Button>
@@ -203,7 +302,7 @@ function NewSectionForm({
                 >
                   Choose from project
                 </Button>
-              </div>
+              </div> */}
 
               {detailFromProject ? (
                 <div>List of details on project...</div>

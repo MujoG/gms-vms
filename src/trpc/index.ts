@@ -183,6 +183,8 @@ export const appRouter = router({
           DetailType: z.string(),
           DetailLabel: z.string(),
           DetailDirection: z.string(),
+          DetailContent: z.string(),
+          DetailOrientation: z.string(),
           PlaneId: z.string(),
         }),
       })
@@ -206,7 +208,61 @@ export const appRouter = router({
             Y2: newPin.Y2,
             DetailType: newPin.DetailType,
             DetailLabel: newPin.DetailLabel,
+            DetailContent: newPin.DetailContent,
+            DetailOrientation: newPin.DetailOrientation,
             PlaneId: newPin.PlaneId,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to create new detail");
+        }
+
+        const data = await response.json();
+
+        // console.log("Created new detail:", data);
+        return data;
+      } catch (error) {
+        console.error("Error creating new detail:", error);
+
+        return error;
+      }
+    }),
+
+  createNewTask: publicProcedure
+    .input(
+      z.object({
+        newPin: z.object({
+          X: z.number(),
+          Y: z.number(),
+          DetailType: z.string(),
+          DetailLabel: z.string(),
+          DetailContent: z.string(),
+          TaskType: z.string(),
+          PlaneId: z.string(),
+        }),
+      })
+    )
+    .mutation(async ({ input }: any) => {
+      const { newPin } = input;
+
+      try {
+        const url = `${process.env.DIRECTUS_API_URL}items/Detail`; // Adjust the endpoint based on your API
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // Add any other headers, like authorization if needed
+          },
+          body: JSON.stringify({
+            X: newPin.X,
+            Y: newPin.Y,
+            DetailType: newPin.DetailType,
+            DetailLabel: newPin.DetailLabel,
+            DetailContent: newPin.DetailContent,
+            PlaneId: newPin.PlaneId,
+            TaskType: newPin.TaskType,
           }),
         });
 

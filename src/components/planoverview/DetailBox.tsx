@@ -5,7 +5,7 @@ import {
   HoverCardTrigger,
 } from "../ui/hover-card";
 import { Button } from "../ui/button";
-import { Disc } from "lucide-react";
+import { BadgeInfo, Disc, Info, MessageCircleQuestion } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { trpc } from "@/trpc/client";
 
@@ -60,8 +60,18 @@ function DetailBox({
       {" "}
       <HoverCard>
         <HoverCardTrigger>
-          <div className="w-[40px] h-[40px]  cursor-pointer">
-            {showIcon ? <Disc className="cursor-pointer" /> : " "}
+          <div className="w-[40px] h-[40px]  cursor-pointer z-0">
+            {showIcon ? (
+              <div className="">
+                {pin.TaskType === "info" ? (
+                  <Info className="cursor-pointer text-green-700" />
+                ) : (
+                  <MessageCircleQuestion className="cursor-pointer text-red-700 -z-10" />
+                )}
+              </div>
+            ) : (
+              " "
+            )}
             {label ? (
               <div className=" w-fit font-semibold text-xs">
                 <Badge variant="destructive" className="uppercase">
@@ -79,7 +89,7 @@ function DetailBox({
           </div>
         </HoverCardTrigger>
         <HoverCardContent
-          className="bg-zinc-600  aspect-square flex flex-col rounded-lg text-white"
+          className="bg-zinc-600  aspect-square flex flex-col rounded-lg text-white z-50"
           style={{
             width: `${cappedContainerSize}px`,
             height: `${cappedContainerSize}px`,
@@ -88,6 +98,7 @@ function DetailBox({
           <div className="h-full text-xs">
             <div className="flex flex-col justify-between h-full  p-2">
               <div>{cappedContainerSize}</div>
+              <div>{pin.X}</div>
               <div>{pin.Y}</div>
               <div>{pin.X2}</div>
               <div>{pin.Y2}</div>

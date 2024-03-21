@@ -1,6 +1,6 @@
 import React from "react";
 import DetailBox from "./DetailBox";
-import { Disc, MoveRight } from "lucide-react";
+import { Dice1, Disc, MoveRight } from "lucide-react";
 
 type Props = {
   pins: any;
@@ -84,26 +84,21 @@ function PinMapper({
               return (
                 <>
                   <div
-                    key={pin.id}
-                    className="absolute w-[24px] h-[24px] z-40 top-[50%]"
+                    className="absolute z-50 top-[55%] -left-[65%] flex items-center justify-center"
                     style={{
-                      top: `${pin.X}%`,
-                      left: `${pin.Y}%`,
+                      top: `${pin.Y}%`,
+                      left: `${pin.X}%`,
+                      transform: `translate(-50%, -50%) `,
                     }}
-                    onClick={() => console.log("mujo", pin.x, pin.y)}
                   >
-                    <div className="flex justify-center items-center relative w-full h-full">
-                      <div className="mt-5">{pin.label}</div>
-                      <span className="absolute -top-[50%] -left-[50%] cursor-pointer">
-                        <DetailBox
-                          handlePinClick={handlePinClick}
-                          pin={pin}
-                          showIcon
-                          handleRefatch={handleRefatch}
-                          zoom={zoom}
-                        />
-                      </span>
-                    </div>
+                    <DetailBox
+                      handlePinClick={handlePinClick}
+                      pin={pin}
+                      handleRefatch={handleRefatch}
+                      zoom={zoom}
+                      showIcon
+                    />
+                    {/* <Disc /> */}
                   </div>
                 </>
               );

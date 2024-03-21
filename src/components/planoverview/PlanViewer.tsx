@@ -225,10 +225,11 @@ function PlanViewer({
 
       if (detailType === "detail") {
         const newPin: Pin = { id: pinId, x, y, detailType };
-        setPins([...pins, newPin]);
-        setPinId(pinId + 1);
-        console.log("pin", newPin, zoom, position.x, position.y);
-        // setOpen(true);
+        setTempPins({
+          start: { x, y },
+        });
+        console.log("pinx", x, "piny", y);
+        setOpen(true);
       } else if (detailType === "section") {
         console.log("prvi pin je udaren", x, y);
 
