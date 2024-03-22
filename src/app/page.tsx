@@ -2,7 +2,6 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { trpc } from "@/trpc/client";
 
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -53,20 +52,12 @@ export default function Home() {
     },
   });
 
-
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     let username = values.username;
     let EncryptedPassword = values.password;
     GetLogin({ username: username, EncryptedPassword: EncryptedPassword });
   }
-
-  useEffect(() => {
-
-
-
-    console.log("jesssin from inistial route");
-  }, []);
 
   return (
     <main>

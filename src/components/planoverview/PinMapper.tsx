@@ -1,6 +1,7 @@
 import React from "react";
 import DetailBox from "./DetailBox";
 import { Dice1, Disc, MoveRight } from "lucide-react";
+import RightClickDetail from "./RightClickDetail";
 
 type Props = {
   pins: any;
@@ -84,6 +85,7 @@ function PinMapper({
               return (
                 <>
                   <div
+                    key={pin.X}
                     className="absolute z-50 top-[55%] -left-[65%] flex items-center justify-center"
                     style={{
                       top: `${pin.Y}%`,
@@ -91,14 +93,11 @@ function PinMapper({
                       transform: `translate(-50%, -50%) `,
                     }}
                   >
-                    <DetailBox
-                      handlePinClick={handlePinClick}
-                      pin={pin}
+                    <RightClickDetail
+                      pinType="task"
+                      pinData={pin}
                       handleRefatch={handleRefatch}
-                      zoom={zoom}
-                      showIcon
                     />
-                    {/* <Disc /> */}
                   </div>
                 </>
               );
@@ -128,8 +127,6 @@ function PinMapper({
                 perpendicularAngle = lineAngle - Math.PI / 2;
               }
 
-              console.log(pin, "pinmujo");
-
               const baseIconSize = 25;
               const baseStrokeSize = 3;
 
@@ -158,11 +155,16 @@ function PinMapper({
                       transform: `translate(-50%, -50%) `,
                     }}
                   >
-                    <DetailBox
+                    {/* <DetailBox
                       handlePinClick={handlePinClick}
                       pin={pin}
                       handleRefatch={handleRefatch}
                       zoom={zoom}
+                    /> */}
+                    <RightClickDetail
+                      pinType="section"
+                      pinData={pin}
+                      handleRefatch={handleRefatch}
                     />
                   </div>
                   {/* arrow icon and location  */}
@@ -226,11 +228,16 @@ function PinMapper({
                       transform: `translate(-50%, -50%) `,
                     }}
                   >
-                    <DetailBox
+                    {/* <DetailBox
                       handlePinClick={handlePinClick}
                       pin={pin}
                       handleRefatch={handleRefatch}
                       zoom={zoom}
+                    /> */}
+                    <RightClickDetail
+                      pinType="section"
+                      pinData={pin}
+                      handleRefatch={handleRefatch}
                     />
                   </div>
                   <div
@@ -304,12 +311,17 @@ function PinMapper({
                     }}
                   >
                     <div className="absolute w-full h-full top-[120%] left-[120%] flex items-center justify-center">
-                      <DetailBox
+                      {/* <DetailBox
                         handlePinClick={handlePinClick}
                         pin={pin}
                         label={pin.DetailLabel}
                         handleRefatch={handleRefatch}
                         zoom={zoom}
+                      /> */}
+                      <RightClickDetail
+                        pinType="rectangle"
+                        pinData={pin}
+                        handleRefatch={handleRefatch}
                       />
                     </div>
                   </div>

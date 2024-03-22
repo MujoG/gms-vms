@@ -7,6 +7,7 @@ import { decodeAuth, verifyAuth } from "@/lib/auth";
 import { CreateCookies } from "@/app/actions/actions";
 import { getAllProjects } from "./procedures/projektProcedures";
 import { getUserInfo } from "./procedures/userProcedures";
+import { checkTokenExistence } from "./procedures/tokenProcedures";
 
 export const appRouter = router({
   exampleApiRoute: publicProcedure.query(() => {
@@ -417,6 +418,7 @@ export const appRouter = router({
       }
     }),
   getAllProjects,
+  checkTokenExistence,
 });
 
 export type AppRouter = typeof appRouter;

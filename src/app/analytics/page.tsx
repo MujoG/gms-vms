@@ -1,4 +1,6 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { trpc } from "@/trpc/client";
 import React from "react";
 import {
   LineChart,
@@ -23,12 +25,29 @@ function Page({}: Props) {
     { name: "Jun", tasksCompleted: 44, projectHours: 85 },
   ];
 
+  const { data: checkTokenExistence } = trpc.checkTokenExistence.useQuery(
+    { id: "user-token" },
+    {
+      onSuccess(data) {
+        console.log("onSucessData", data);
+      },
+    }
+  );
+
   return (
     <div className="flex mt-10 mx-2 relative">
       <div className="flex flex-col p-10">
         <div className=" uppercase underline my-2 font-semibold">
           {" "}
           this is some fake data just to have something on this page :)
+        </div>
+
+        <div className=" text-green-500 text-2xl">
+          {checkTokenExistence ? (
+            <div className="">TOKEN ACTIVE</div>
+          ) : (
+            <div className="text-red-500">TOKEN INACTIVE</div>
+          )}
         </div>
 
         <div className="summary-stats">

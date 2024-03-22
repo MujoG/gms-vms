@@ -60,7 +60,7 @@ function DetailBox({
       {" "}
       <HoverCard>
         <HoverCardTrigger>
-          <div className="w-[40px] h-[40px]  cursor-pointer z-0">
+          <div className="cursor-pointer z-0">
             {showIcon ? (
               <div className="">
                 {pin.TaskType === "info" ? (
@@ -95,7 +95,7 @@ function DetailBox({
             height: `${cappedContainerSize}px`,
           }}
         >
-          <div className="h-full text-xs">
+          <div className="h-full text-xs z-50">
             <div className="flex flex-col justify-between h-full  p-2">
               <div>{cappedContainerSize}</div>
               <div>{pin.X}</div>
