@@ -59,6 +59,15 @@ export default function Home() {
     GetLogin({ username: username, EncryptedPassword: EncryptedPassword });
   }
 
+  const { data: checkTokenExistence } = trpc.checkTokenExistence.useQuery(
+    { id: "user-token" },
+    {
+      onSuccess(data) {
+        console.log("onSucessData", data);
+      },
+    }
+  );
+
   return (
     <main>
       <div className="mt-32 p-5 flex flex-col items-center justify-center">
@@ -86,6 +95,13 @@ export default function Home() {
               <span>
                 The <span className="text-[#47989c] font-bold">GMS</span> Team.
               </span>
+            </div>
+            <div className=" text-green-500 text-2xl">
+              {checkTokenExistence ? (
+                <div className="">TOKEN ACTIVE</div>
+              ) : (
+                <div className="text-red-500">TOKEN INACTIVE</div>
+              )}
             </div>
           </div>
         </div>
