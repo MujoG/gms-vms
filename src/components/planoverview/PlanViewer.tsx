@@ -411,7 +411,7 @@ function PlanViewer({
         style={{
           transform: `scale(${zoom}) translate(${position.x}px, ${position.y}px)`,
           transformOrigin: "center",
-          transition: dragging ? "transform 0.02s ease-in-out" : "none",
+          transition: dragging ? " transform 0.02s ease-in-out" : "none",
         }}
       >
         <div
