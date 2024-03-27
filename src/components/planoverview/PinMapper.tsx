@@ -26,6 +26,8 @@ function PinMapper({
   handleRefatch,
   zoom,
 }: Props) {
+  console.log("mujooooo", detailsData);
+
   return (
     <div>
       {tempPin.x !== undefined &&
@@ -80,40 +82,38 @@ function PinMapper({
 
       {detailsData && detailsData.length > 0 ? (
         <>
-          {detailsData.map((pin: any) => {
-            if (pin.DetailType === "detail") {
+          {detailsData.map((pin: any, index: any) => {
+            if (pin.pinType === "detail") {
               return (
-                <>
-                  <div
-                    key={pin.X}
-                    className="absolute z-50 top-[55%] -left-[65%] flex items-center justify-center"
-                    style={{
-                      top: `${pin.Y}%`,
-                      left: `${pin.X}%`,
-                      transform: `translate(-50%, -50%) `,
-                    }}
-                  >
-                    <RightClickDetail
-                      pinType="task"
-                      pinData={pin}
-                      handleRefatch={handleRefatch}
-                    />
-                  </div>
-                </>
+                <div
+                  key={index}
+                  className="absolute z-50 top-[55%] -left-[65%] flex items-center justify-center"
+                  style={{
+                    top: `${pin.y1coordinate}%`,
+                    left: `${pin.x1coordinate}%`,
+                    transform: `translate(-50%, -50%) `,
+                  }}
+                >
+                  <RightClickDetail
+                    pinType="task"
+                    pinData={pin}
+                    handleRefatch={handleRefatch}
+                  />
+                </div>
               );
             } else if (
-              pin.DetailType === "section" &&
-              pin.X2 !== undefined &&
-              pin.Y2 !== undefined
+              pin.pinType === "section" &&
+              pin.x2coordinate !== undefined &&
+              pin.y2coordinate !== undefined
             ) {
               const containerWidth = imageDimensions.width;
               const containerHeight = imageDimensions.height;
 
-              const endX = (pin.X2 / 100) * containerWidth;
-              const endY = (pin.Y2 / 100) * containerHeight;
+              const endX = (pin.x2coordinate / 100) * containerWidth;
+              const endY = (pin.y2coordinate / 100) * containerHeight;
 
-              const startX = (pin.X / 100) * containerWidth;
-              const startY = (pin.Y / 100) * containerHeight;
+              const startX = (pin.x1coordinate / 100) * containerWidth;
+              const startY = (pin.y1coordinate / 100) * containerHeight;
 
               const lineAngle = Math.atan2(endY - startY, endX - startX);
 
@@ -150,8 +150,8 @@ function PinMapper({
                   <div
                     className="absolute z-50 top-[55%] -left-[65%] flex items-center justify-center"
                     style={{
-                      top: `${pin.Y}%`,
-                      left: `${pin.X}%`,
+                      top: `${pin.y1coordinate}%`,
+                      left: `${pin.x1coordinate}%`,
                       transform: `translate(-50%, -50%) `,
                     }}
                   >
@@ -171,8 +171,8 @@ function PinMapper({
                   <div
                     className="absolute h-[20px] w-[20px] flex items-center justify-center cursor-pointer"
                     style={{
-                      top: `${pin.Y}%`,
-                      left: `${pin.X}%`,
+                      top: `${pin.y1coordinate}%`,
+                      left: `${pin.x1coordinate}%`,
                       transform: `translate(-50%, -50%) rotate(${perpendicularAngle}rad)`,
                     }}
                   >
@@ -212,10 +212,18 @@ function PinMapper({
                   >
                     {/* Line itself */}
                     <line
-                      x1={`${pin.X}%`}
-                      y1={`${pin.Y}%`}
-                      x2={pin.X2 !== undefined ? `${pin.X2}%` : "0%"}
-                      y2={pin.Y2 !== undefined ? `${pin.Y2}%` : "0%"}
+                      x1={`${pin.x1coordinate}%`}
+                      y1={`${pin.y1coordinate}%`}
+                      x2={
+                        pin.x2coordinate !== undefined
+                          ? `${pin.x2coordinate}%`
+                          : "0%"
+                      }
+                      y2={
+                        pin.y2coordinate !== undefined
+                          ? `${pin.y2coordinate}%`
+                          : "0%"
+                      }
                       stroke="red"
                       strokeWidth={`${strokeWidthScaled}`}
                     />
@@ -223,8 +231,8 @@ function PinMapper({
                   <div
                     className="absolute z-50 top-[55%] -left-[65%] flex items-center justify-center"
                     style={{
-                      top: `${pin.Y2}%`,
-                      left: `${pin.X2}%`,
+                      top: `${pin.y2coordinate}%`,
+                      left: `${pin.x2coordinate}%`,
                       transform: `translate(-50%, -50%) `,
                     }}
                   >
@@ -243,8 +251,8 @@ function PinMapper({
                   <div
                     className="absolute h-[20px] w-[20px] flex items-center justify-center"
                     style={{
-                      top: `${pin.Y2}%`,
-                      left: `${pin.X2}%`,
+                      top: `${pin.y2coordinate}%`,
+                      left: `${pin.x2coordinate}%`,
                       transform: `translate(-50%, -50%) rotate(${perpendicularAngle}rad)`,
                     }}
                   >
@@ -274,8 +282,8 @@ function PinMapper({
               );
             } else if (
               pin.DetailType === "rectangle" &&
-              pin.X2 !== undefined &&
-              pin.Y2 !== undefined
+              pin.x2coordinate !== undefined &&
+              pin.y2coordinate !== undefined
             ) {
               const containerWidth = imageDimensions.width;
               const containerHeight = imageDimensions.height;
@@ -305,8 +313,8 @@ function PinMapper({
                   <div
                     className="absolute z-50 w-[20px] h-[20px] flex items-center justify-center "
                     style={{
-                      top: `${pin.Y}%`,
-                      left: `${pin.X}%`,
+                      top: `${pin.y1coordinate}%`,
+                      left: `${pin.x1coordinate}%`,
                       transform: `translate(-50%, -50%) `,
                     }}
                   >
@@ -337,10 +345,14 @@ function PinMapper({
                   >
                     {/* Rectangle itself */}
                     <rect
-                      x={`${Math.min(pin.X, pin.X2)}%`}
-                      y={`${Math.min(pin.Y, pin.Y2)}%`}
-                      width={`${Math.abs(pin.X - pin.X2)}%`}
-                      height={`${Math.abs(pin.Y - pin.Y2)}%`}
+                      x={`${Math.min(pin.x1coordinate, pin.x2coordinate)}%`}
+                      y={`${Math.min(pin.y1coordinate, pin.y2coordinate)}%`}
+                      width={`${Math.abs(
+                        pin.x1coordinate - pin.x2coordinate
+                      )}%`}
+                      height={`${Math.abs(
+                        pin.y1coordinate - pin.y2coordinate
+                      )}%`}
                       stroke="green"
                       strokeWidth="3"
                       fill="transparent"

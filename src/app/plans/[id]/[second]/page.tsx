@@ -21,9 +21,55 @@ const Page: React.FC<PageProps> = () => {
   const [loading, setLoading] = useState(true);
   const [planeId, setPlaneId] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
+  const [imageURL, setImageURL] = useState<any>();
+
+  const [pins, setPins] = useState<any>();
+
+  const [apiData, setApiData] = useState<any>();
 
   const pathname = usePathname();
-  const [, , uuid] = pathname.split("/");
+  const [, , uuid, id] = pathname.split("/");
+
+  const { data: overviewById } = trpc.getOverviewById.useQuery(
+    { id: id },
+    {
+      onSuccess(data) {
+        // console.log("mujo", data);
+        setApiData(data);
+      },
+    }
+  );
+
+  const { data: getPinsByOverViewID } = trpc.getPinsByOverViewID.useQuery(
+    { id: id },
+    {
+      onSuccess(data) {
+        console.log("da", data);
+        setPins(data);
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (overviewById) {
+      console.log("overviewById2", overviewById);
+      // Remove data prefix if present
+      const base64String = overviewById.image;
+      // Decode base64 string to binary data
+      const binaryData = atob(base64String);
+      // Create a Uint8Array from binary data
+      const uint8Array = new Uint8Array(binaryData.length);
+      for (let i = 0; i < binaryData.length; i++) {
+        uint8Array[i] = binaryData.charCodeAt(i);
+      }
+      // Create a Blob object with 'image/png' MIME type
+      const blob = new Blob([uint8Array], { type: "image/png" });
+      // Create URL for the Blob object
+      const imageUrl = URL.createObjectURL(blob);
+
+      setImageURL(imageUrl);
+    }
+  }, [overviewById]);
 
   const queryClient = useQueryClient();
 
@@ -97,9 +143,9 @@ const Page: React.FC<PageProps> = () => {
       {imageBg && (
         <>
           <PlanViewer
-            imageUrl={imageBg}
-            oldPins={details}
-            detailsData={details}
+            imageUrl={imageURL}
+            oldPins={pins}
+            detailsData={pins}
             planeId={planeId}
             handleRefatch={handleRefetch}
           />
