@@ -24,6 +24,7 @@ function Projekt({}: Props) {
     return <div>Error fetching data</div>;
   }
 
+  console.log("projekts", projekts);
   return (
     <div className="h-[100%] overflow-y-auto -mt-[48px]">
       <div className="text-center ">

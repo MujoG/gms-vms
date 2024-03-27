@@ -66,11 +66,16 @@ export function PlaneDataTable() {
 
   const { data: planes } = trpc.getPlanes.useQuery();
 
+  const { data: overviewByProject } = trpc.getOverviewPlanes.useQuery({
+    project: "P-1214",
+  });
+
   const [data, setData] = React.useState<any>();
 
   React.useEffect(() => {
     if (planes && planes.data) {
       setData(planes.data);
+      console.log("test", overviewByProject);
     }
   }, [planes]);
 

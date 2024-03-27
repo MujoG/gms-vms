@@ -5,7 +5,7 @@ import { z } from "zod";
 import cookie from "cookie";
 import { decodeAuth, verifyAuth } from "@/lib/auth";
 import { CreateCookies } from "@/app/actions/actions";
-import { getAllProjects } from "./procedures/projektProcedures";
+import { getAllProjects, getOverviewPlanes } from "./procedures/projektProcedures";
 import { getUserInfo } from "./procedures/userProcedures";
 import { checkTokenExistence } from "./procedures/tokenProcedures";
 
@@ -14,6 +14,7 @@ export const appRouter = router({
     return "hello motherfucker";
   }),
   getUserInfo,
+  getOverviewPlanes,
   postZipCode: publicProcedure
     .input(z.object({ Id: z.string() }))
     .query(async ({ input }) => {
