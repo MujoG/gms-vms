@@ -191,7 +191,9 @@ const Page: React.FC<PageProps> = () => {
 
         return (
           <div className="flex justify-around gap-2 items-center">
-            <Link href={`/plans/${row.original.id}`}>
+            <Link
+              href={`/plans/${row.original.projectNumber}/${row.original.id}`}
+            >
               <Button variant="ghost" className={iconClass}>
                 <ChevronRight className="h-4 w-4" />
               </Button>
