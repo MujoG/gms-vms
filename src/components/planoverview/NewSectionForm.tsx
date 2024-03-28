@@ -292,7 +292,7 @@ function NewSectionForm({
                       {getPlanWerkByProject && (
                         <SelectContent>
                           {getPlanWerkByProject.map((item: any) => (
-                            <SelectItem value={`${item.id}`}>
+                            <SelectItem value={`${item.id}`} key={item.id}>
                               <div className="flex flex-col">
                                 <div className="font-semibold">
                                   {item.beschreibung}
