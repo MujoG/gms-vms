@@ -5,7 +5,14 @@ import { z } from "zod";
 import cookie from "cookie";
 import { decodeAuth, verifyAuth } from "@/lib/auth";
 import { CreateCookies } from "@/app/actions/actions";
-import { getAllProjects, getOverviewById, getOverviewPlanes, getPinsByOverViewID } from "./procedures/projektProcedures";
+import {
+  createNewDetailPin,
+  getAllProjects,
+  getOverviewById,
+  getOverviewPlanes,
+  getPinsByOverViewID,
+  getPlanWerkByProject,
+} from "./procedures/projektProcedures";
 import { getUserInfo } from "./procedures/userProcedures";
 import { checkTokenExistence } from "./procedures/tokenProcedures";
 
@@ -17,6 +24,8 @@ export const appRouter = router({
   getOverviewPlanes,
   getOverviewById,
   getPinsByOverViewID,
+  createNewDetailPin,
+  getPlanWerkByProject,
   postZipCode: publicProcedure
     .input(z.object({ Id: z.string() }))
     .query(async ({ input }) => {

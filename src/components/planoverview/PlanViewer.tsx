@@ -35,6 +35,7 @@ type Props = {
   detailsData: any;
   planeId: any;
   handleRefatch: any;
+  overviewID: any;
 };
 
 function PlanViewer({
@@ -43,6 +44,7 @@ function PlanViewer({
   detailsData,
   planeId,
   handleRefatch,
+  overviewID,
 }: Props) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const imageRef = React.useRef<HTMLImageElement>(null);
@@ -106,6 +108,8 @@ function PlanViewer({
   };
 
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    if (open) return; // If disabled, do nothing
+
     const zoomFactor = event.deltaY > 0 ? 0.9 : 1.1;
     let newZoom = zoom * zoomFactor;
 
@@ -399,6 +403,7 @@ function PlanViewer({
         pinType={pinType}
         planeId={planeId}
         handleRefatch={handleRefatch}
+        overviewID={overviewID}
       />
       {/* this is for adding or removing pins */}
       {/* <PinTypeSelect pinType={pinType} setPinType={setPinType} /> */}

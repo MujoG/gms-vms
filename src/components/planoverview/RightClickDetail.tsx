@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/context-menu";
 import { trpc } from "@/trpc/client";
 import { Badge } from "../ui/badge";
+import Link from "next/link";
 
 type Props = {
   pinType: "rectangle" | "task" | "section";
@@ -88,12 +89,12 @@ function RightClickDetail({ pinType, pinData, handleRefatch }: Props) {
                 <div className="flex flex-col gap-1 my-2">
                   <div className="flex flex-col">
                     <div className="uppercase text-xs">INFORMATIONS:</div>
-                    <div>{pinData.DetailContent}</div>
+                    <div>{pinData.comment}</div>
                   </div>
                   <div className="flex justify-between text-s border-t">
                     <div>Created On:</div>
                     <div>
-                      {new Date(pinData.date_created).toLocaleDateString()}
+                      {new Date(pinData.insertDate).toLocaleDateString()}
                     </div>
                   </div>
                 </div>
@@ -106,36 +107,44 @@ function RightClickDetail({ pinType, pinData, handleRefatch }: Props) {
               >
                 Console Log Data
               </ContextMenuItem> */}
-            <ContextMenuItem inset onClick={handleDeleteClick}>
+            <ContextMenuItem inset onClick={handleDeleteClick} disabled>
               Remove
             </ContextMenuItem>
-            {/* <ContextMenuSub>
-                <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>
-                <ContextMenuSubContent className="w-48">
-                  <ContextMenuItem>
-                    Save Page As...
-                    <ContextMenuShortcut>⇧⌘S</ContextMenuShortcut>
-                  </ContextMenuItem>
-                  <ContextMenuItem>Create Shortcut...</ContextMenuItem>
-                  <ContextMenuItem>Name Window...</ContextMenuItem>
-                  <ContextMenuSeparator />
-                  <ContextMenuItem>Developer Tools</ContextMenuItem>
-                </ContextMenuSubContent>
-              </ContextMenuSub> */}
+            <ContextMenuSeparator />
+
+            <ContextMenuSub>
+              <ContextMenuSubTrigger inset>More</ContextMenuSubTrigger>
+              <ContextMenuSubContent className="w-48">
+                <ContextMenuItem>More informations / Link</ContextMenuItem>
+                <ContextMenuSeparator />
+                <ContextMenuItem>
+                  <Link href={pinData.infoURL}>Download Detail PDF</Link>
+                  {/* <ContextMenuShortcut>⇧⌘S</ContextMenuShortcut> */}
+                </ContextMenuItem>
+                {/* <ContextMenuItem>Download Detail PDF</ContextMenuItem> */}
+              </ContextMenuSubContent>
+            </ContextMenuSub>
             <ContextMenuSeparator />
             {/* <ContextMenuCheckboxItem checked>
                 Show Bookmarks Bar
                 <ContextMenuShortcut>⌘⇧B</ContextMenuShortcut>
               </ContextMenuCheckboxItem> */}
-            <ContextMenuItem inset>More Informations</ContextMenuItem>
-            <ContextMenuSeparator />
-            <ContextMenuRadioGroup value="Name">
+            <ContextMenuItem inset>
+              <div className="flex flex-col justify-between">
+                <div className="font-semibold underline text-xs uppercase">
+                  Assigned Person:
+                </div>
+                <div>{pinData.insertUser}</div>
+              </div>
+            </ContextMenuItem>
+            {/* <ContextMenuSeparator /> */}
+            {/* <ContextMenuRadioGroup value="Name">
               <ContextMenuLabel inset>Assigned Person</ContextMenuLabel>
               <ContextMenuSeparator />
               <ContextMenuRadioItem value="Name">
-                Name UserName
+                {pinData.insertUser}
               </ContextMenuRadioItem>
-            </ContextMenuRadioGroup>
+            </ContextMenuRadioGroup> */}
           </ContextMenuContent>
         </ContextMenu>
       </>

@@ -16,6 +16,7 @@ type Props = {
   pinType: any;
   planeId: any;
   handleRefatch: any;
+  overviewID: any;
 };
 
 import {
@@ -46,9 +47,9 @@ import { trpc } from "@/trpc/client";
 import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
-  label: z.string().min(1, {
-    message: "Label must be at least 1 character.",
-  }),
+  // label: z.string().min(1, {
+  //   message: "Label must be at least 1 character.",
+  // }),
   content: z.string().min(1, {
     message: "Content must be at least 1 character.",
   }),
@@ -57,6 +58,9 @@ const formSchema = z.object({
   }),
   taskType: z.string().min(1, {
     message: "Label must be at least 1 character.",
+  }),
+  referenceId: z.string().min(1, {
+    message: "referenceId must be at least 1 character.",
   }),
 });
 
@@ -75,6 +79,7 @@ function NewSectionForm({
   pinType,
   planeId,
   handleRefatch,
+  overviewID,
 }: Props) {
   const [detailFromProject, setDetailFromProject] = React.useState(false);
 
@@ -83,25 +88,29 @@ function NewSectionForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      label: "",
+      // label: "",
       content: "",
       orientation: "right",
       taskType: "info",
+      referenceId: "",
     },
   });
 
-  const { mutate: createNewDetail, isError: isCreateNewDetailError } =
-    trpc.createNewDetail.useMutation({
-      onSuccess: (newDetailData) => {
-        console.log("Success from mutate createNewDetail:", newDetailData);
-        queryClient.invalidateQueries(["getPlaneDetails", planeId]);
-        handleRefatch();
-        setOpen(false);
-      },
-      onError: (error) => {
-        console.error("Error from mutate createNewDetail:", error);
-      },
-    });
+  // const { mutate: createNewDetail, isError: isCreateNewDetailError } =
+  //   trpc.createNewDetail.useMutation({
+  //     onSuccess: (newDetailData) => {
+  //       console.log("Success from mutate createNewDetail:", newDetailData);
+  //       queryClient.invalidateQueries(["getPlaneDetails", planeId]);
+  //       handleRefatch();
+  //       setOpen(false);
+  //     },
+  //     onError: (error) => {
+  //       console.error("Error from mutate createNewDetail:", error);
+  //     },
+  //   });
+
+  const { data: getPlanWerkByProject, error: getPlanWerkByProjectError } =
+    trpc.getPlanWerkByProject.useQuery({ project: "P-1214" });
 
   const { mutate: createNewTask, isError } = trpc.createNewTask.useMutation({
     onSuccess: (newDetailData) => {
@@ -115,31 +124,59 @@ function NewSectionForm({
     },
   });
 
+  const { mutate: createNewDetailPin, isError: eror } =
+    trpc.createNewDetailPin.useMutation({
+      onSuccess: (newDetailData) => {
+        console.log("Success from mutate createNewDetail:", newDetailData);
+        queryClient.invalidateQueries(["getPlaneDetails", planeId]);
+        handleRefatch();
+        setOpen(false);
+      },
+      onError: (error) => {
+        console.error("Error from mutate createNewDetail:", error);
+      },
+    });
+
+  React.useEffect(() => {
+    console.log("getPlanWerkByProject", getPlanWerkByProject);
+  }, [getPlanWerkByProject]);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     let detailType = pinType;
+
+    console.log("vale", values);
 
     if (detailType === "detail") {
       console.log("ovo je detalj");
       try {
-        let x = tempPins.start.x;
-        let y = tempPins.start.y;
-        let detailContent = values.content;
-        let label = values.label;
-        let detailType = pinType;
-        let taskType = values.taskType;
-        let PlaneId = planeId;
+        let x1coordinate = tempPins.start.x;
+        let y1coordinate = tempPins.start.y;
+        let x2coordinate = 0;
+        let y2coordinate = 0;
+        let description = values.content;
+        // let label = values.label;
+        // let pinType = pinType;
+        let iconType = values.taskType;
+        let referenceId = parseInt(values.referenceId);
+
+        let idInt = overviewID * 1;
 
         const newPin: any = {
-          X: x,
-          Y: y,
-          DetailType: detailType,
-          DetailLabel: label,
-          PlaneId: PlaneId,
-          DetailContent: detailContent,
-          TaskType : taskType
+          x1coordinate: x1coordinate,
+          y1coordinate: y1coordinate,
+          x2coordinate: x2coordinate,
+          y2coordinate: y2coordinate,
+          pinType: pinType,
+          // label: label,
+          description: description,
+          iconType: iconType,
+          overviewPlanID: idInt,
+          referenceId: referenceId,
         };
 
-        await createNewTask({
+        console.log("newpin", newPin);
+
+        await createNewDetailPin({
           newPin,
         });
 
@@ -151,31 +188,32 @@ function NewSectionForm({
       }
     } else {
       try {
-        let x = tempPins.start.x;
-        let y = tempPins.start.y;
-        let x2 = tempPins.end.x2;
-        let y2 = tempPins.end.y2;
-        let detailContent = values.content;
-        let label = values.label;
-        let direction = values.orientation;
-        let detailType = pinType;
-        let detailOrientation = values.orientation;
-        let PlaneId = planeId;
+        let x1coordinate = tempPins.start.x;
+        let y1coordinate = tempPins.start.y;
+        let x2coordinate = tempPins.end.x2;
+        let y2coordinate = tempPins.end.y2;
+        let description = values.content;
+        // let pinType = pinType;
+        let iconType = values.taskType;
+        let referenceId = parseInt(values.referenceId);
+
+        let idInt = overviewID * 1;
 
         const newPin: any = {
-          X: x,
-          Y: y,
-          X2: x2,
-          Y2: y2,
-          DetailType: detailType,
-          DetailLabel: label,
-          DetailDirection: direction,
-          DetailOrientation: detailOrientation,
-          PlaneId: PlaneId,
-          DetailContent: detailContent,
+          x1coordinate: x1coordinate,
+          y1coordinate: y1coordinate,
+          x2coordinate: x2coordinate,
+          y2coordinate: y2coordinate,
+          pinType: pinType,
+          description: description,
+          iconType: iconType,
+          overviewPlanID: idInt,
+          referenceId: referenceId,
         };
 
-        await createNewDetail({
+        console.log("newPin2", newPin);
+
+        await createNewDetailPin({
           newPin,
         });
 
@@ -204,7 +242,7 @@ function NewSectionForm({
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="label"
                 render={({ field }) => (
@@ -219,18 +257,57 @@ function NewSectionForm({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <FormField
                 control={form.control}
                 name="content"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Detail Content</FormLabel>
+                    <FormLabel>User Comment</FormLabel>
                     <FormControl>
-                      <Input placeholder="Content" {...field} />
+                      <Input placeholder="User Comment" {...field} />
                     </FormControl>
                     <FormDescription>
-                      This Label represent this Detail
+                      Write down your comment about this Pin.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="referenceId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Select Plan</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Plan" />
+                        </SelectTrigger>
+                      </FormControl>
+                      {getPlanWerkByProject && (
+                        <SelectContent>
+                          {getPlanWerkByProject.map((item: any) => (
+                            <SelectItem value={`${item.id}`}>
+                              <div className="flex flex-col">
+                                <div className="font-semibold">
+                                  {item.beschreibung}
+                                </div>
+                                <div className="text-xs">
+                                  {item.zeichnungsname}
+                                </div>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      )}
+                    </Select>
+                    <FormDescription>
+                      Descriptio about select for relation field.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

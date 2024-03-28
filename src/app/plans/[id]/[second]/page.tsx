@@ -40,15 +40,16 @@ const Page: React.FC<PageProps> = () => {
     }
   );
 
-  const { data: getPinsByOverViewID } = trpc.getPinsByOverViewID.useQuery(
-    { id: id },
-    {
-      onSuccess(data) {
-        console.log("da", data);
-        setPins(data);
-      },
-    }
-  );
+  const { data: getPinsByOverViewID, refetch: refetchDetails } =
+    trpc.getPinsByOverViewID.useQuery(
+      { id: id },
+      {
+        onSuccess(data) {
+          console.log("da", data);
+          setPins(data);
+        },
+      }
+    );
 
   useEffect(() => {
     if (overviewById) {
@@ -108,7 +109,6 @@ const Page: React.FC<PageProps> = () => {
     data: listOfDetails,
     isLoading: isDetailsLoading,
     error: detailsError,
-    refetch: refetchDetails,
   } = trpc.getArrayOfPlaneDetails.useQuery(
     { Id: planeId || "" },
     {
@@ -143,6 +143,7 @@ const Page: React.FC<PageProps> = () => {
       {imageBg && (
         <>
           <PlanViewer
+          overviewID = {id}
             imageUrl={imageURL}
             oldPins={pins}
             detailsData={pins}

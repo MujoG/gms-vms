@@ -26,8 +26,6 @@ function PinMapper({
   handleRefatch,
   zoom,
 }: Props) {
-  console.log("mujooooo", detailsData);
-
   return (
     <div>
       {tempPin.x !== undefined &&
@@ -281,7 +279,7 @@ function PinMapper({
                 </>
               );
             } else if (
-              pin.DetailType === "rectangle" &&
+              pin.pinType === "rectangle" &&
               pin.x2coordinate !== undefined &&
               pin.y2coordinate !== undefined
             ) {
